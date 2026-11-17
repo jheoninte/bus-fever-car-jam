@@ -1,0 +1,589 @@
+{
+  "solverPolicy": "sequential exits with automatic boarding to quiescence; no boosters, ads or purchases",
+  "randomPlayPolicy": "uniform random legal vehicle, settle after each exit; 100 seeded runs per level",
+  "stages": [
+    {
+      "stage": 1,
+      "seed": 1009,
+      "solution": [
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 5,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 100,
+        "winRate": 1,
+        "seed": 17001,
+        "failurePath": null
+      }
+    },
+    {
+      "stage": 2,
+      "seed": 2018,
+      "solution": [
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 6,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 100,
+        "winRate": 1,
+        "seed": 17002,
+        "failurePath": null
+      }
+    },
+    {
+      "stage": 3,
+      "seed": 3027,
+      "solution": [
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 7,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 91,
+        "winRate": 0.91,
+        "seed": 17003,
+        "failurePath": [
+          "v_2",
+          "v_5",
+          "v_1",
+          "v_4"
+        ]
+      }
+    },
+    {
+      "stage": 4,
+      "seed": 4036,
+      "solution": [
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 8,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 93,
+        "winRate": 0.93,
+        "seed": 17004,
+        "failurePath": [
+          "v_7",
+          "v_1",
+          "v_4",
+          "v_2"
+        ]
+      }
+    },
+    {
+      "stage": 5,
+      "seed": 5045,
+      "solution": [
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 9,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 43,
+        "winRate": 0.43,
+        "seed": 17005,
+        "failurePath": [
+          "v_8",
+          "v_6",
+          "v_4",
+          "v_2"
+        ]
+      }
+    },
+    {
+      "stage": 6,
+      "seed": 6054,
+      "solution": [
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 8,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 90,
+        "winRate": 0.9,
+        "seed": 17006,
+        "failurePath": [
+          "v_2",
+          "v_6",
+          "v_3",
+          "v_5"
+        ]
+      }
+    },
+    {
+      "stage": 7,
+      "seed": 7063,
+      "solution": [
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 9,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 81,
+        "winRate": 0.81,
+        "seed": 17007,
+        "failurePath": [
+          "v_5",
+          "v_8",
+          "v_4",
+          "v_1",
+          "v_7"
+        ]
+      }
+    },
+    {
+      "stage": 8,
+      "seed": 8072,
+      "solution": [
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 10,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 44,
+        "winRate": 0.44,
+        "seed": 17008,
+        "failurePath": [
+          "v_8",
+          "v_7",
+          "v_3",
+          "v_4"
+        ]
+      }
+    },
+    {
+      "stage": 9,
+      "seed": 9081,
+      "solution": [
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 10,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 19,
+        "winRate": 0.19,
+        "seed": 17009,
+        "failurePath": [
+          "v_8",
+          "v_1",
+          "v_3",
+          "v_5",
+          "v_6",
+          "v_7",
+          "v_9"
+        ]
+      }
+    },
+    {
+      "stage": 10,
+      "seed": 10090,
+      "solution": [
+        "v_10",
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 11,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 46,
+        "winRate": 0.46,
+        "seed": 17010,
+        "failurePath": [
+          "v_9",
+          "v_5",
+          "v_3",
+          "v_6"
+        ]
+      }
+    },
+    {
+      "stage": 11,
+      "seed": 11099,
+      "solution": [
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 9,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 77,
+        "winRate": 0.77,
+        "seed": 17011,
+        "failurePath": [
+          "v_5",
+          "v_8",
+          "v_3",
+          "v_2"
+        ]
+      }
+    },
+    {
+      "stage": 12,
+      "seed": 12108,
+      "solution": [
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 10,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 15,
+        "winRate": 0.15,
+        "seed": 17012,
+        "failurePath": [
+          "v_8",
+          "v_3",
+          "v_1",
+          "v_5",
+          "v_6",
+          "v_9"
+        ]
+      }
+    },
+    {
+      "stage": 13,
+      "seed": 21036,
+      "solution": [
+        "v_10",
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 11,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 15,
+        "winRate": 0.15,
+        "seed": 17013,
+        "failurePath": [
+          "v_9",
+          "v_7",
+          "v_10",
+          "v_5"
+        ]
+      }
+    },
+    {
+      "stage": 14,
+      "seed": 14126,
+      "solution": [
+        "v_10",
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 11,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 5,
+        "winRate": 0.05,
+        "seed": 17014,
+        "failurePath": [
+          "v_10",
+          "v_7",
+          "v_3",
+          "v_5"
+        ]
+      }
+    },
+    {
+      "stage": 15,
+      "seed": 15135,
+      "solution": [
+        "v_11",
+        "v_10",
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 12,
+      "tunnelBoarded": 0,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 26,
+        "winRate": 0.26,
+        "seed": 17015,
+        "failurePath": [
+          "v_11",
+          "v_9",
+          "v_5",
+          "v_8",
+          "v_4",
+          "v_10"
+        ]
+      }
+    },
+    {
+      "stage": 16,
+      "seed": 16144,
+      "solution": [
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 10,
+      "tunnelBoarded": 4,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 36,
+        "winRate": 0.36,
+        "seed": 17016,
+        "failurePath": [
+          "v_3",
+          "v_6",
+          "v_8",
+          "v_9",
+          "v_2",
+          "v_1",
+          "v_7"
+        ]
+      }
+    },
+    {
+      "stage": 17,
+      "seed": 17153,
+      "solution": [
+        "v_10",
+        "v_7",
+        "v_9",
+        "v_8",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 11,
+      "tunnelBoarded": 10,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 52,
+        "winRate": 0.52,
+        "seed": 17017,
+        "failurePath": [
+          "v_9",
+          "v_8",
+          "v_4",
+          "v_3"
+        ]
+      }
+    },
+    {
+      "stage": 18,
+      "seed": 18162,
+      "solution": [
+        "v_11",
+        "v_8",
+        "v_10",
+        "v_9",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 12,
+      "tunnelBoarded": 8,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 7,
+        "winRate": 0.07,
+        "seed": 17018,
+        "failurePath": [
+          "v_10",
+          "v_11",
+          "v_2",
+          "v_7",
+          "v_3"
+        ]
+      }
+    },
+    {
+      "stage": 19,
+      "seed": 19171,
+      "solution": [
+        "v_12",
+        "v_9",
+        "v_11",
+        "v_10",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 13,
+      "tunnelBoarded": 10,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 22,
+        "winRate": 0.22,
+        "seed": 17019,
+        "failurePath": [
+          "v_11",
+          "v_12",
+          "v_10",
+          "v_6",
+          "v_9",
+          "v_8",
+          "v_3",
+          "v_5"
+        ]
+      }
+    },
+    {
+      "stage": 20,
+      "seed": 20180,
+      "solution": [
+        "v_13",
+        "v_10",
+        "v_12",
+        "v_11",
+        "v_9",
+        "v_8",
+        "v_7",
+        "v_6",
+        "v_5",
+        "v_4",
+        "v_3",
+        "v_2",
+        "v_1"
+      ],
+      "visited": 14,
+      "tunnelBoarded": 10,
+      "randomPlay": {
+        "runs": 100,
+        "wins": 4,
+        "winRate": 0.04,
+        "seed": 17020,
+        "failurePath": [
+          "v_12",
+          "v_2",
+          "v_9",
+          "v_10",
+          "v_8"
+        ]
+      }
+    }
+  ]
+}

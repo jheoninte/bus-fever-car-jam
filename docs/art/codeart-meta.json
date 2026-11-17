@@ -1,0 +1,9 @@
+{
+  "art_source": "code",
+  "disclosure": "code-drawn, no image model",
+  "style": "Original toy bus station, shaded vector buses and articulated passengers rendered with Phaser graphics",
+  "sources": ["web-prototype/src/toy-presentation.js", "web-prototype/src/station-layout.js", "web-prototype/presentation.css"],
+  "generation_attempt": { "local_cli": "timed out; recovery found no artifact", "image_api": "no route configured" },
+  "reference_use": "General casual-game presentation direction; no reference bitmap traced or copied",
+  "limitations": ["Stylized 2D art, not 3D models", "Native iOS rendering still needs verification on Mac and device"]
+}

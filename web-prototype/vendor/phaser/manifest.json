@@ -1,0 +1,17 @@
+{
+  "name": "phaser",
+  "version": "3.80.1",
+  "license": "MIT",
+  "tarball": "https://registry.npmjs.org/phaser/-/phaser-3.80.1.tgz",
+  "integrity": "sha512-VQGAWoDOkEpAWYkI+PUADv5Ql+SM0xpLuAMBJHz9tBcOLqjJ2wd8bUhxJgOqclQlLTg97NmMd9MhS75w16x1Cw==",
+  "files": {
+    "phaser.min.js": {
+      "bytes": 1181917,
+      "sha256": "62081f6a1b51d040473f919ffedef9009953c20833518e146da5a8d1c9405ea8"
+    },
+    "LICENSE.md": {
+      "bytes": 1120,
+      "sha256": "080f3d5539e766bb556df5b8e86c4f5d581ece35c692b80956ca352b84d29134"
+    }
+  }
+}

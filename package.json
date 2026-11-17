@@ -1,1 +1,31 @@
-{"name":"bus-fever-car-jam","private":true,"version":"0.1.0","type":"module","description":"Development scaffold for the Bus Fever Car Jam prototype package.","engines":{"node":">=18"},"scripts":{"dev":"node scripts/dev-server.mjs","start":"node scripts/dev-server.mjs","build":"node scripts/build-static.mjs","check":"node scripts/check-repo.mjs"}}
+{
+  "name": "bus-fever-car-jam",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Development scaffold for the Bus Fever Car Jam prototype package.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "start": "node scripts/dev-server.mjs",
+    "build": "node scripts/build-static.mjs",
+    "preview": "node scripts/dev-server.mjs --root dist",
+    "vendor:phaser": "node scripts/vendor-phaser.mjs",
+    "validate:levels": "node scripts/validate-levels.mjs",
+    "generate:levels": "node scripts/generate-levels.mjs",
+    "validate:platform": "node scripts/validate-platform.mjs",
+    "validate:ios": "node scripts/validate-ios.mjs",
+    "ios:project": "node scripts/generate-ios-project.mjs",
+    "prepare:ios": "npm run build && node scripts/prepare-ios.mjs && node scripts/validate-ios-host.mjs --bundle",
+    "validate:ios:host": "node scripts/validate-ios-host.mjs",
+    "validate:ios:release": "node scripts/validate-ios.mjs --release",
+    "validate:serving": "node scripts/validate-serving.mjs",
+    "validate:offline": "node scripts/validate-offline.mjs",
+    "validate:gameplay": "node scripts/validate-gameplay.mjs",
+    "validate:resume": "node scripts/validate-resume.mjs",
+    "validate:hints": "node scripts/validate-hints.mjs",
+    "validate:presentation": "node scripts/validate-presentation.mjs",
+    "validate:bundle": "npm run build && node scripts/validate-serving.mjs --root dist",
+    "check": "node scripts/check-repo.mjs && node scripts/validate-levels.mjs && node scripts/validate-platform.mjs && node scripts/validate-gameplay.mjs && node scripts/validate-resume.mjs && node scripts/validate-hints.mjs && node scripts/validate-presentation.mjs && node scripts/validate-ios.mjs && node scripts/validate-ios-host.mjs && node scripts/validate-serving.mjs && node scripts/validate-offline.mjs"
+  }
+}

@@ -1,0 +1,65 @@
+/* Original toy-town presentation. Core game rules and level data stay separate. */
+:root {
+  --bg-canvas: #c8e6b7;
+  --surface-panel: #fffdf1;
+  --surface-card: #fffdf5;
+  --border-subtle: #d8dfce;
+  --text-primary: #254b5c;
+  --text-secondary: #69838a;
+  --accent-gold: #e4a225;
+  --accent-sky: #30a8e7;
+  --accent-emerald: #319e74;
+  --accent-coral: #e56c65;
+}
+html, body { background: #c8e6b7; }
+body { display: grid; place-items: center; }
+#app-shell { width: min(100%, 500px); height: min(100dvh, 960px); margin: auto; }
+#hud-header { position: absolute; top: max(12px, env(safe-area-inset-top)); width: min(94%, 470px); gap: 8px; }
+.game-brand { color: #fffef3; line-height: .95; font-weight: 950; font-style: italic; font-size: 14px; letter-spacing: -.7px; text-shadow: 0 2px 0 #358286, 1px 0 #358286, -1px 0 #358286; transform: rotate(-5deg); }
+.game-brand strong { display: block; font-size: 23px; color: #ffd85c; text-shadow: 0 3px 0 #a17736, 1px 0 #a17736, -1px 0 #a17736; }
+.status-pill { border: 2px solid #fffef3; border-radius: 16px; background: #faf9e9; padding: 6px 16px; gap: 7px; box-shadow: 0 4px 0 #a0bf97, 0 7px 13px #54885b18; backdrop-filter: none; color: #2c5c69; }
+.status-pill .tag { color: #809389; font-size: 9px; letter-spacing: 1px; }
+#ui-stage { font-size: 27px; font-weight: 950; line-height: 28px; }
+.header-controls { align-items: center; gap: 5px; }
+.coin-chip { display: flex; align-items: center; gap: 4px; border: 2px solid #fff4cb; border-radius: 16px; background: #fffbed; color: #9b6c25; padding: 7px 9px; font-size: 13px; font-weight: 900; box-shadow: 0 3px 0 #b7c597; }
+.currency-value { color: #9b6c25; }
+.pill-btn { border-radius: 13px; border: 2px solid #ffffffc9; background: linear-gradient(#63c7f7, #2da4e2); color: white; box-shadow: 0 4px 0 #288cbb, 0 6px 10px #3468521c; padding: 8px 10px; min-height: 38px; text-shadow: 0 1px 1px #1c7ead; }
+#btn-reset { font-size: 23px; line-height: 20px; width: 39px; justify-content: center; padding: 7px; }
+#btn-shop { font-size: 0; gap: 0; width: 38px; justify-content: center; }
+#btn-shop::before { content: '🛒'; font-size: 21px; }
+#stage-guide { top: calc(76px + env(safe-area-inset-top)); max-width: 440px; left: 24px; right: 24px; font-size: 11px; color: #58755d; z-index: 10; }
+.guide-topline { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#stage-title { color: #315d55; font-size: 13px; font-weight: 900; }
+#stage-tutorial { font-size: 10px; line-height: 1.5; margin-top: 1px; max-width: 96%; }
+#hint-row { margin-top: 3px; gap: 7px; }
+#btn-hint { min-height: 28px; font-size: 10px; padding: 3px 8px; background: #fff9da; color: #8e7036; border-color: #ffffff; box-shadow: 0 2px 0 #c8c7a0; text-shadow: none; border-radius: 9px; }
+#hint-message { font-size: 10px; color: #6c8466; }
+.boarding-status { display: flex; gap: 6px; align-items: center; font-size: 10px; color: #5d8062; font-weight: 800; white-space: nowrap; }
+.progress-track { width: 56px; height: 7px; border-radius: 9px; background: #96ba8770; overflow: hidden; box-shadow: inset 0 1px 2px #326e3c20; }
+#boarding-progress { width: 0; height: 100%; background: linear-gradient(90deg, #ffcb58, #f7ab42); border-radius: 9px; transition: width .3s; }
+#hud-footer { position: absolute; width: min(90%, 410px); bottom: max(16px, env(safe-area-inset-bottom)); gap: 14px; }
+.booster-card { position: relative; overflow: visible; border: 3px solid #e9faff; border-radius: 21px; min-height: 83px; padding: 31px 4px 8px; gap: 3px; background: linear-gradient(#69c9fa, #35a8ef 64%, #3094dc); box-shadow: 0 6px 0 #1979b8, 0 10px 0 #f4f9e5, 0 13px 12px #60805b30, inset 0 1px 1px #ffffff; font-size: 12px; font-weight: 900; color: white; text-shadow: 0 2px 0 #277fae; }
+.booster-card .remain { font-size: 9px; color: #eafaff; background: #1575b852; border-radius: 8px; padding: 2px 6px; text-shadow: none; }
+.booster-card:disabled { opacity: .5; filter: saturate(.6); }
+.booster-art { position: absolute; top: -19px; width: 58px; height: 45px; font-size: 37px; filter: drop-shadow(0 3px 1px #246fa247); text-shadow: none; line-height: 1; }
+#btn-vip { background: linear-gradient(#ffcf62, #f8b237 68%, #ec9b24); box-shadow: 0 6px 0 #cb8425, 0 10px 0 #f4f9e5, 0 13px 12px #60805b30; text-shadow: 0 2px 0 #b98325; }
+#btn-vip .remain { background: #b9772752; }
+.overlay-mask { background: #234b536d; backdrop-filter: blur(5px); }
+.dialog-box { color: #254b5c; border: 4px solid #ffffff; border-radius: 27px; box-shadow: 0 8px 0 #8da6a6, 0 18px 45px #194b503d; }
+.dialog-title { color: #2b6170; }
+.shop-row { background: #eff3e8; border-color: #e1e8d9; border-radius: 14px; }
+.shop-title { color: #315b66; }
+.shop-desc { color: #70868a; }
+.btn-secondary { background: #eaf1e5; border: 1px solid #d7e4ce; color: #477163; box-shadow: 0 3px 0 #c0d1b9; }
+.shop-buy-btn { border: 2px solid #d9ffe8; border-radius: 11px; box-shadow: 0 3px 0 #5aa985; }
+#toast-pill { position: absolute; top: auto; bottom: max(124px, calc(env(safe-area-inset-bottom) + 114px)); max-width: min(90%, 420px); text-align: center; border: 2px solid #fffded; background: #2f675bec; font-size: 12px; box-shadow: 0 4px 16px #39695025; }
+@media (max-height: 739px) {
+  #stage-guide { top: calc(67px + env(safe-area-inset-top)); }
+  #hud-footer { bottom: max(12px, env(safe-area-inset-bottom)); }
+  .booster-card { min-height: 67px; padding-top: 22px; font-size: 11px; border-radius: 17px; }
+  .booster-art { top: -19px; font-size: 31px; height: 36px; }
+  #toast-pill { bottom: 102px; }
+}
+@media (min-width: 700px) { body { background: radial-gradient(ellipse at 50% 30%, #e5f1d7, #b4d7a6); } #app-shell { overflow: hidden; border-radius: 30px; box-shadow: 0 22px 75px #437f5030, 0 0 0 7px #f0f5e299; } }
+@media (max-width: 360px) { .game-brand { font-size: 10px; flex-shrink: 0; } .game-brand strong { font-size: 16px; white-space: nowrap; } .coin-chip { font-size: 11px; padding: 6px; } .status-pill { padding: 5px 7px; } #ui-stage { font-size: 23px; } #hud-header { flex-wrap: nowrap; gap: 5px; } #hint-message { display: none; } }
+@media (prefers-reduced-motion: reduce) { .dialog-box { animation: none; } * { transition-duration: 0s !important; } }

@@ -1,6 +1,12 @@
 node_modules/
 dist/
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
 .DS_Store
 Thumbs.db
 *.log
 .vscode/
+# Local image-generation session metadata, never runtime assets.
+.forge/

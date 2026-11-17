@@ -1,1 +1,3788 @@
-{"seed":1,"slotLimit":7,"cars":[{"gimmick":"normal","stack":["red","blue","green"]},{"gimmick":"mystery","stack":["yellow","yellow"]},{"gimmick":"frozen","stack":["purple","purple","blue"]},{"gimmick":"tunnel","stack":["cyan","red","cyan"]}]}
+{
+  "schemaVersion": 2,
+  "stages": [
+    {
+      "stage": 1,
+      "seed": 1009,
+      "title": "같은 색 승객 태우기",
+      "cols": 5,
+      "rows": 5,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "앞길이 트인 차를 누르면 같은 색 승객이 정류장에서 자동으로 탑승해요.",
+      "design": {
+        "vehicles": 4,
+        "buses": 0,
+        "colors": 2,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          20,
+          35
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 2,
+      "seed": 2018,
+      "title": "버스와 정류장 회전",
+      "cols": 5,
+      "rows": 5,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "앞길이 트인 차를 누르면 같은 색 승객이 정류장에서 자동으로 탑승해요.",
+      "design": {
+        "vehicles": 5,
+        "buses": 1,
+        "colors": 2,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          30,
+          45
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 4
+            },
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 3,
+      "seed": 3027,
+      "title": "세 가지 색의 순서",
+      "cols": 5,
+      "rows": 5,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "앞길이 트인 차를 누르면 같은 색 승객이 정류장에서 자동으로 탑승해요.",
+      "design": {
+        "vehicles": 6,
+        "buses": 1,
+        "colors": 3,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          35,
+          50
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 1
+            },
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "yellow",
+        "yellow",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 4,
+      "seed": 4036,
+      "title": "앞길을 여는 순서",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "앞길이 트인 차를 누르면 같은 색 승객이 정류장에서 자동으로 탑승해요.",
+      "design": {
+        "vehicles": 7,
+        "buses": 2,
+        "colors": 3,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          40,
+          60
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 5
+            },
+            {
+              "c": 1,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 5
+            },
+            {
+              "c": 3,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 5,
+      "seed": 5045,
+      "title": "빈 정류장 남기기",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "앞길이 트인 차를 누르면 같은 색 승객이 정류장에서 자동으로 탑승해요.",
+      "design": {
+        "vehicles": 8,
+        "buses": 2,
+        "colors": 4,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          50,
+          75
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 5
+            },
+            {
+              "c": 2,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            },
+            {
+              "c": 2,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 6,
+      "seed": 6054,
+      "title": "물음표 차량 발견",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "물음표 차량은 정류장에 도착하면 색이 공개돼요. 빈 칸을 남겨 두세요.",
+      "design": {
+        "vehicles": 7,
+        "buses": 1,
+        "colors": 3,
+        "mysteries": 2,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          45,
+          65
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 3
+            },
+            {
+              "c": 3,
+              "r": 2
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 1
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_7",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 7,
+      "seed": 7063,
+      "title": "공개와 출발의 순서",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "물음표 차량은 정류장에 도착하면 색이 공개돼요. 빈 칸을 남겨 두세요.",
+      "design": {
+        "vehicles": 8,
+        "buses": 2,
+        "colors": 3,
+        "mysteries": 3,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          50,
+          70
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 2
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 3
+            },
+            {
+              "c": 5,
+              "r": 3
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_4",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 1
+            },
+            {
+              "c": 2,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "yellow",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue"
+      ]
+    },
+    {
+      "stage": 8,
+      "seed": 8072,
+      "title": "물음표 버스",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "물음표 차량은 정류장에 도착하면 색이 공개돼요. 빈 칸을 남겨 두세요.",
+      "design": {
+        "vehicles": 9,
+        "buses": 2,
+        "colors": 4,
+        "mysteries": 3,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          55,
+          80
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 4
+            },
+            {
+              "c": 3,
+              "r": 5
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 3
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            },
+            {
+              "c": 5,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 3
+            }
+          ],
+          "gimmick": "mystery"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "green",
+        "green",
+        "red",
+        "red",
+        "green",
+        "green",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 9,
+      "seed": 9081,
+      "title": "숨겨진 길 열기",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "물음표 차량은 정류장에 도착하면 색이 공개돼요. 빈 칸을 남겨 두세요.",
+      "design": {
+        "vehicles": 9,
+        "buses": 3,
+        "colors": 4,
+        "mysteries": 4,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          60,
+          85
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 0
+            },
+            {
+              "c": 1,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 2
+            },
+            {
+              "c": 3,
+              "r": 2
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 3
+            },
+            {
+              "c": 4,
+              "r": 2
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 10,
+      "seed": 10090,
+      "title": "물음표 종합 연습",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "물음표 차량은 정류장에 도착하면 색이 공개돼요. 빈 칸을 남겨 두세요.",
+      "design": {
+        "vehicles": 10,
+        "buses": 3,
+        "colors": 4,
+        "mysteries": 5,
+        "frozen": 0,
+        "tunnels": 0,
+        "targetSeconds": [
+          70,
+          95
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            },
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 0
+            },
+            {
+              "c": 1,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 5,
+              "r": 1
+            },
+            {
+              "c": 4,
+              "r": 1
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            }
+          ],
+          "gimmick": "mystery"
+        }
+      ],
+      "passengerQueue": [
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 11,
+      "seed": 11099,
+      "title": "얼음 해제색 찾기",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "얼음에 표시된 색의 승객이 맨 앞에 도착하면 얼음이 풀려요.",
+      "design": {
+        "vehicles": 8,
+        "buses": 1,
+        "colors": 3,
+        "mysteries": 0,
+        "frozen": 1,
+        "tunnels": 0,
+        "targetSeconds": [
+          50,
+          75
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 1
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "yellow"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            },
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 12,
+      "seed": 12108,
+      "title": "순서대로 해동하기",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "얼음에 표시된 색의 승객이 맨 앞에 도착하면 얼음이 풀려요.",
+      "design": {
+        "vehicles": 9,
+        "buses": 2,
+        "colors": 4,
+        "mysteries": 0,
+        "frozen": 2,
+        "tunnels": 0,
+        "targetSeconds": [
+          60,
+          85
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            },
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 4
+            },
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "yellow"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 2
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "yellow"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 13,
+      "seed": 21036,
+      "title": "얼어붙은 버스",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "얼음에 표시된 색의 승객이 맨 앞에 도착하면 얼음이 풀려요.",
+      "design": {
+        "vehicles": 10,
+        "buses": 3,
+        "colors": 4,
+        "mysteries": 0,
+        "frozen": 2,
+        "tunnels": 0,
+        "targetSeconds": [
+          65,
+          90
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 2
+            },
+            {
+              "c": 2,
+              "r": 3
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "yellow"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 1
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "red"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            },
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 5,
+              "r": 5
+            },
+            {
+              "c": 5,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 14,
+      "seed": 14126,
+      "title": "물음표와 얼음",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "얼음에 표시된 색의 승객이 맨 앞에 도착하면 얼음이 풀려요.",
+      "design": {
+        "vehicles": 10,
+        "buses": 3,
+        "colors": 5,
+        "mysteries": 2,
+        "frozen": 2,
+        "tunnels": 0,
+        "targetSeconds": [
+          75,
+          100
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "blue"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 0,
+              "r": 0
+            },
+            {
+              "c": 1,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 1
+            },
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 2
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "red"
+        },
+        {
+          "id": "v_5",
+          "colorId": "purple",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 5
+            },
+            {
+              "c": 3,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_6",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_9",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "purple",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 15,
+      "seed": 15135,
+      "title": "해동 순서의 선택",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "얼음에 표시된 색의 승객이 맨 앞에 도착하면 얼음이 풀려요.",
+      "design": {
+        "vehicles": 11,
+        "buses": 3,
+        "colors": 5,
+        "mysteries": 0,
+        "frozen": 3,
+        "tunnels": 0,
+        "targetSeconds": [
+          80,
+          110
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 5
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "yellow"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 4
+            },
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "blue"
+        },
+        {
+          "id": "v_5",
+          "colorId": "purple",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 1
+            },
+            {
+              "c": 4,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            },
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "green"
+        },
+        {
+          "id": "v_7",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "green",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "purple",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_11",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 16,
+      "seed": 16144,
+      "title": "같은 색 터널 탑승",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "터널 차량은 대기열 뒤쪽에 있는 같은 색 승객도 먼저 태울 수 있어요.",
+      "design": {
+        "vehicles": 9,
+        "buses": 1,
+        "colors": 4,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 1,
+        "targetSeconds": [
+          60,
+          85
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            },
+            {
+              "c": 3,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 0
+            }
+          ],
+          "gimmick": "tunnel"
+        }
+      ],
+      "passengerQueue": [
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 17,
+      "seed": 17153,
+      "title": "뒤쪽 승객 먼저 태우기",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "터널 차량은 대기열 뒤쪽에 있는 같은 색 승객도 먼저 태울 수 있어요.",
+      "design": {
+        "vehicles": 10,
+        "buses": 2,
+        "colors": 4,
+        "mysteries": 0,
+        "frozen": 0,
+        "tunnels": 2,
+        "targetSeconds": [
+          65,
+          95
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 4
+            },
+            {
+              "c": 2,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "yellow",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 0
+            },
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "tunnel"
+        },
+        {
+          "id": "v_8",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "blue",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 3
+            }
+          ],
+          "gimmick": "tunnel"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "green",
+        "green",
+        "blue",
+        "blue",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "yellow",
+        "yellow",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "yellow",
+        "yellow",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 18,
+      "seed": 18162,
+      "title": "터널과 얼음",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "터널 차량은 대기열 뒤쪽에 있는 같은 색 승객도 먼저 태울 수 있어요.",
+      "design": {
+        "vehicles": 11,
+        "buses": 3,
+        "colors": 5,
+        "mysteries": 0,
+        "frozen": 1,
+        "tunnels": 2,
+        "targetSeconds": [
+          75,
+          105
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 2
+            },
+            {
+              "c": 1,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 5,
+              "r": 4
+            },
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 1
+            },
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "purple",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "green"
+        },
+        {
+          "id": "v_8",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "tunnel"
+        },
+        {
+          "id": "v_9",
+          "colorId": "green",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "purple",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_11",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 5
+            }
+          ],
+          "gimmick": "tunnel"
+        }
+      ],
+      "passengerQueue": [
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "blue",
+        "blue",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 19,
+      "seed": 19171,
+      "title": "세 기믹 연결하기",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "터널 차량은 대기열 뒤쪽에 있는 같은 색 승객도 먼저 태울 수 있어요.",
+      "design": {
+        "vehicles": 12,
+        "buses": 4,
+        "colors": 5,
+        "mysteries": 1,
+        "frozen": 1,
+        "tunnels": 2,
+        "targetSeconds": [
+          85,
+          115
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 0,
+              "r": 1
+            },
+            {
+              "c": 0,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "green"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 1
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_5",
+          "colorId": "purple",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "red",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 2,
+              "r": 0
+            },
+            {
+              "c": 2,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_7",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_8",
+          "colorId": "yellow",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 5
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "green",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 3
+            },
+            {
+              "c": 5,
+              "r": 3
+            }
+          ],
+          "gimmick": "tunnel"
+        },
+        {
+          "id": "v_10",
+          "colorId": "purple",
+          "dir": "RIGHT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 5,
+              "r": 1
+            },
+            {
+              "c": 4,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_11",
+          "colorId": "red",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_12",
+          "colorId": "blue",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 1,
+              "r": 3
+            }
+          ],
+          "gimmick": "tunnel"
+        }
+      ],
+      "passengerQueue": [
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "blue",
+        "blue",
+        "purple",
+        "purple",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "green",
+        "green",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "red",
+        "red",
+        "purple",
+        "purple",
+        "green",
+        "green",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    },
+    {
+      "stage": 20,
+      "seed": 20180,
+      "title": "첫 번째 챕터 완성",
+      "cols": 6,
+      "rows": 6,
+      "dockCount": 4,
+      "slotLimit": 4,
+      "tutorial": "터널 차량은 대기열 뒤쪽에 있는 같은 색 승객도 먼저 태울 수 있어요.",
+      "design": {
+        "vehicles": 13,
+        "buses": 4,
+        "colors": 6,
+        "mysteries": 2,
+        "frozen": 1,
+        "tunnels": 2,
+        "targetSeconds": [
+          90,
+          120
+        ]
+      },
+      "vehicles": [
+        {
+          "id": "v_1",
+          "colorId": "red",
+          "dir": "LEFT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 3,
+              "r": 3
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_2",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 2,
+              "r": 0
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_3",
+          "colorId": "yellow",
+          "dir": "RIGHT",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_4",
+          "colorId": "green",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 4,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_5",
+          "colorId": "purple",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 2
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_6",
+          "colorId": "cyan",
+          "dir": "UP",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 2
+            },
+            {
+              "c": 1,
+              "r": 3
+            }
+          ],
+          "gimmick": "mystery"
+        },
+        {
+          "id": "v_7",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 4
+            }
+          ],
+          "gimmick": "frozen",
+          "unlockColorId": "blue"
+        },
+        {
+          "id": "v_8",
+          "colorId": "blue",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 3
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_9",
+          "colorId": "yellow",
+          "dir": "DOWN",
+          "length": 1,
+          "cells": [
+            {
+              "c": 0,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_10",
+          "colorId": "green",
+          "dir": "UP",
+          "length": 1,
+          "cells": [
+            {
+              "c": 5,
+              "r": 0
+            }
+          ],
+          "gimmick": "tunnel"
+        },
+        {
+          "id": "v_11",
+          "colorId": "purple",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 4,
+              "r": 5
+            },
+            {
+              "c": 4,
+              "r": 4
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_12",
+          "colorId": "cyan",
+          "dir": "LEFT",
+          "length": 2,
+          "cells": [
+            {
+              "c": 1,
+              "r": 1
+            },
+            {
+              "c": 2,
+              "r": 1
+            }
+          ],
+          "gimmick": "normal"
+        },
+        {
+          "id": "v_13",
+          "colorId": "red",
+          "dir": "DOWN",
+          "length": 2,
+          "cells": [
+            {
+              "c": 3,
+              "r": 5
+            },
+            {
+              "c": 3,
+              "r": 4
+            }
+          ],
+          "gimmick": "tunnel"
+        }
+      ],
+      "passengerQueue": [
+        "cyan",
+        "cyan",
+        "purple",
+        "purple",
+        "red",
+        "red",
+        "cyan",
+        "cyan",
+        "purple",
+        "purple",
+        "red",
+        "red",
+        "cyan",
+        "cyan",
+        "purple",
+        "purple",
+        "red",
+        "red",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "red",
+        "red",
+        "cyan",
+        "cyan",
+        "purple",
+        "purple",
+        "red",
+        "red",
+        "cyan",
+        "cyan",
+        "purple",
+        "purple",
+        "cyan",
+        "cyan",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "green",
+        "green",
+        "yellow",
+        "yellow",
+        "blue",
+        "blue",
+        "red",
+        "red",
+        "red",
+        "red"
+      ]
+    }
+  ]
+}

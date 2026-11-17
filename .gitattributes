@@ -1,0 +1,3 @@
+web-prototype/vendor/phaser/phaser.min.js -text
+web-prototype/vendor/phaser/LICENSE.md -text
+web-prototype/vendor/phaser/manifest.json text eol=lf

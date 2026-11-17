@@ -1,1 +1,1875 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Bus Fever! Car Jam Escape</title><style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0f172a;color:#f8fafc}.shell{display:grid;grid-template-columns:360px 1fr;min-height:100vh}.sidebar{padding:16px;background:#111827}.content{padding:16px;display:flex;align-items:center;justify-content:center}.lane{display:grid;grid-template-columns:repeat(5,88px);gap:10px}.car{width:88px;height:128px;border-radius:16px;padding:8px;border:none;cursor:pointer;color:#fff;font-weight:700;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 10px 24px rgba(0,0,0,.28)}.passenger{width:18px;height:18px;border-radius:50%;display:inline-block;margin-right:4px}.queue{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.slot{width:56px;height:56px;border-radius:14px;border:2px dashed rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-weight:700}button{border:none;border-radius:10px;padding:10px 12px;background:#2563eb;color:white;cursor:pointer}.ghost{background:#334155}.hud{font-size:13px;color:#cbd5e1;line-height:1.5}</style></head><body><div class="shell"><aside class="sidebar"><h2 style="margin-top:0;">Bus Fever! Car Jam Escape</h2><div style="display:flex;gap:8px;flex-wrap:wrap;"><button id="shuffleBtn">Shuffle</button><button id="regenBtn" class="ghost">Next Seed</button><button id="cbBtn" class="ghost">Colorblind</button></div><div class="hud" id="hud" style="margin-top:12px;"></div><div style="margin-top:16px;"><div><b>Bus Slots</b></div><div id="slots" class="queue"></div></div></aside><main class="content"><div id="lane" class="lane"></div></main></div><script>const palette={red:'#ef4444',blue:'#3b82f6',green:'#22c55e',yellow:'#eab308',purple:'#a855f7',cyan:'#06b6d4'},symbols={red:'R',blue:'B',green:'G',yellow:'Y',purple:'P',cyan:'C'},alt={red:'●',blue:'▲',green:'■',yellow:'◆',purple:'✦',cyan:'✚'};const st={colorblind:false,score:0,seed:1,slots:[],cars:[]},lane=document.getElementById('lane'),slots=document.getElementById('slots'),hud=document.getElementById('hud');function level(seed){const colors=Object.keys(palette),cars=[];for(let i=0;i<10;i++){const stack=[],len=2+((seed+i)%3);for(let j=0;j<len;j++)stack.push(colors[(seed*3+i+j)%colors.length]);cars.push({id:i,gimmick:i===2?'mystery':i===6?'frozen':i===8?'tunnel':'normal',stack})}st.cars=cars;st.slots=[];render()}function sym(c){return st.colorblind?alt[c]:symbols[c]}function flush(){const cnt={};st.slots.forEach(c=>cnt[c]=(cnt[c]||0)+1);const hit=Object.keys(cnt).find(c=>cnt[c]>=3);if(!hit)return;let rm=0;st.slots=st.slots.filter(c=>{if(c===hit&&rm<3){rm++;return false}return true});st.score+=30}function tap(id){const car=st.cars.find(c=>c.id===id);if(!car||!car.stack.length||st.slots.length>=7)return;if(car.gimmick==='frozen'&&car.stack.length>1)return;let p=car.stack.shift();if(car.gimmick==='mystery')p=Object.keys(palette)[Math.floor(Math.random()*6)];st.slots.push(p);if(car.gimmick==='tunnel'&&car.stack.length)st.slots.push(car.stack.pop());flush();render()}function render(){lane.innerHTML='';st.cars.forEach(car=>{const b=document.createElement('button');b.className='car';b.style.background='#1f2937';b.onclick=()=>tap(car.id);const top=car.stack[0];b.innerHTML=`<div>${car.gimmick.toUpperCase()}</div><div>${car.stack.map(c=>`<span class="passenger" style="background:${palette[c]}"></span>${sym(c)}`).join(' ')||'CLEAR'}</div><div>Top: ${top?sym(top):'-'}</div>`;lane.appendChild(b)});slots.innerHTML='';for(let i=0;i<7;i++){const el=document.createElement('div');el.className='slot';const color=st.slots[i];if(color){el.style.background=palette[color];el.textContent=sym(color)}slots.appendChild(el)}const cleared=st.cars.filter(c=>c.stack.length===0).length;hud.innerHTML=`Seed ${st.seed} · Score ${st.score}<br/>Cleared Cars: ${cleared}/10<br/>Slot Load: ${st.slots.length}/7`}document.getElementById('shuffleBtn').onclick=()=>{st.cars.forEach(c=>c.stack.sort(()=>Math.random()-.5));render()};document.getElementById('regenBtn').onclick=()=>{st.seed+=1;level(st.seed)};document.getElementById('cbBtn').onclick=e=>{st.colorblind=!st.colorblind;e.target.textContent=st.colorblind?'Standard Colors':'Colorblind';render()};level(1);</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Bus Fever: Car Jam</title>
+    <script src="./vendor/phaser/phaser.min.js"></script>
+    <style>
+        :root {
+            --bg-canvas: #121726;
+            --surface-panel: rgba(23, 30, 48, 0.94);
+            --surface-card: #1b2338;
+            --border-subtle: rgba(255, 255, 255, 0.14);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-gold: #fbbf24;
+            --accent-sky: #38bdf8;
+            --accent-emerald: #34d399;
+            --accent-coral: #f87171;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--bg-canvas);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+        }
+
+        #app-shell {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #phaser-root {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            #phaser-root canvas {
+                display: block;
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+        /* 상단 HUD (플레이 영역 보호를 위한 최소형 칩 구조) */
+        #hud-header {
+            position: fixed;
+            top: max(12px, env(safe-area-inset-top));
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(94vw, 480px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .status-pill {
+            pointer-events: auto;
+            background: var(--surface-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            padding: 7px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+        }
+
+            .status-pill .tag {
+                color: var(--text-secondary);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.03em;
+            }
+
+        .header-controls {
+            display: flex;
+            flex-shrink: 0;
+            gap: 6px;
+            pointer-events: auto;
+        }
+
+        .currency-value {
+            color: var(--accent-gold);
+            font-weight: 800;
+        }
+
+        .pill-btn {
+            white-space: nowrap;
+            background: var(--surface-panel);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 7px 13px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+            transition: transform 0.12s ease;
+        }
+
+            .pill-btn:active {
+                transform: scale(0.94);
+            }
+
+        @media (max-width: 480px) {
+            #hud-header { gap: 4px; flex-wrap: wrap; }
+            .status-pill { padding: 7px 8px; gap: 4px; font-size: 12px; white-space: nowrap; }
+            .status-pill .tag { font-size: 9px; letter-spacing: 0; }
+            .pill-btn { padding: 7px 9px; font-size: 12px; }
+        }
+
+        /* 하단 부스터 컨트롤 */
+        #hud-footer {
+            position: fixed;
+            bottom: max(14px, env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(94vw, 460px);
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .booster-card {
+            pointer-events: auto;
+            flex: 1;
+            max-width: 155px;
+            background: var(--surface-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 9px 10px;
+            color: var(--text-primary);
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            transition: transform 0.12s ease;
+        }
+
+            .booster-card:active {
+                transform: scale(0.95);
+            }
+
+            .booster-card .remain {
+                font-size: 10px;
+                color: var(--accent-gold);
+                font-weight: 700;
+            }
+
+            .booster-card:disabled {
+                opacity: 0.42;
+                cursor: not-allowed;
+            }
+
+        /* 오버레이 모달 */
+        .overlay-mask {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 13, 22, 0.78);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .dialog-box {
+            width: min(92vw, 390px);
+            max-height: 100%;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            background: var(--surface-card);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: var(--radius-lg);
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+            animation: dialogPop 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        @keyframes dialogPop {
+            from {
+                opacity: 0;
+                transform: scale(0.93) translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .dialog-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+        }
+
+        .dialog-sub {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+            line-height: 1.45;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 13px 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, #38bdf8, #2563eb);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+            transition: transform 0.12s ease;
+        }
+
+            .btn-primary:active {
+                transform: scale(0.97);
+            }
+
+        .btn-secondary {
+            width: 100%;
+            margin-top: 8px;
+            padding: 11px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* 리더보드 리스트 (HubGame 응답 성공 시에만 활성화) */
+        .rank-list {
+            list-style: none;
+            max-height: 260px;
+            overflow-y: auto;
+            margin-bottom: 16px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .rank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .rank-no {
+            font-weight: 800;
+            color: var(--accent-gold);
+            width: 32px;
+        }
+
+        .rank-user {
+            flex: 1;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 8px;
+        }
+
+        .rank-score {
+            font-weight: 700;
+            color: var(--accent-sky);
+        }
+
+        .dialog-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .shop-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .shop-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .shop-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .shop-title {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .shop-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .shop-buy-btn {
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #34d399, #059669);
+            color: #ffffff;
+            padding: 10px 12px;
+            font-size: 12px;
+            font-weight: 800;
+            min-width: 88px;
+            cursor: pointer;
+        }
+
+        .shop-buy-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        #stage-guide {
+            position: absolute;
+            top: calc(56px + env(safe-area-inset-top));
+            left: 16px;
+            right: 16px;
+            max-width: 480px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            font-size: 12px;
+            line-height: 1.4;
+            pointer-events: none;
+        }
+        #stage-title { color: var(--text-primary); font-weight: 700; }
+        #hint-row { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+        #btn-hint { pointer-events: auto; min-height: 44px; flex-shrink: 0; }
+        #btn-hint:disabled { opacity: 0.45; cursor: default; }
+        #hint-message { font-size: 11px; line-height: 1.4; }
+
+        /* 일시 알림 토스트 */
+        #toast-pill {
+            position: fixed;
+            top: 66px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 40;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+            #toast-pill.visible {
+                opacity: 1;
+            }
+    </style>
+    <link rel="stylesheet" href="./presentation.css" />
+</head>
+<body>
+    <div id="app-shell">
+        <div id="phaser-root"></div>
+
+        <!-- 상단 최소형 HUD -->
+        <div id="hud-header">
+            <div class="game-brand" aria-label="Bus Fever Car Jam">BUS FEVER<strong>CAR JAM</strong></div>
+            <div class="status-pill">
+                <span class="tag">STAGE</span>
+                <span id="ui-stage">1</span>
+                <span id="ui-score" hidden>0</span>
+            </div>
+
+            <div class="header-controls">
+                <div class="coin-chip"><span aria-hidden="true">🪙</span><span id="ui-coins" class="currency-value">120</span></div>
+                <button id="btn-shop" class="pill-btn" type="button">🛒 상점</button>
+                <!-- 제약 1 & 2: window.HubGame이 유효하게 응답할 때만 노출 -->
+                <button id="btn-rank" class="pill-btn hidden" type="button">🏆 랭킹</button>
+                <button id="btn-reset" class="pill-btn" type="button" aria-label="다시하기">↻</button>
+            </div>
+        </div>
+
+        <div id="stage-guide" aria-live="polite">
+            <div class="guide-topline"><div id="stage-title"></div><div class="boarding-status"><span id="ui-boarding">0 / 0</span><div class="progress-track"><div id="boarding-progress"></div></div></div></div>
+            <div id="stage-tutorial"></div>
+            <div id="hint-row">
+                <button id="btn-hint" class="pill-btn" type="button" disabled aria-describedby="hint-message">💡 힌트</button>
+                <span id="hint-message" role="status">다음에 움직일 차량이 궁금하면 눌러 보세요.</span>
+            </div>
+        </div>
+
+        <!-- 하단 부스터 바 -->
+        <div id="hud-footer">
+            <button id="btn-shuffle" class="booster-card" type="button">
+                <span class="booster-art" aria-hidden="true">🔀</span><span>대기열 섞기</span>
+                <span class="remain" id="ui-shuffle-count">남음: 2</span>
+            </button>
+            <button id="btn-vip" class="booster-card" type="button">
+                <span class="booster-art" aria-hidden="true">🚕</span><span>VIP 즉시출발</span>
+                <span class="remain" id="ui-vip-count">남음: 1</span>
+            </button>
+            <button id="btn-reward" class="booster-card" type="button">
+                <span class="booster-art" aria-hidden="true">🎁</span><span>광고 보상</span>
+                <span class="remain">셔플+VIP+코인</span>
+            </button>
+        </div>
+
+        <div id="toast-pill"></div>
+
+        <!-- 스테이지 결과 모달 -->
+        <div id="modal-outcome" class="overlay-mask hidden">
+            <div class="dialog-box">
+                <div class="dialog-title" id="outcome-title">STAGE CLEAR!</div>
+                <div class="dialog-sub" id="outcome-desc">모든 승객이 버스에 탑승했습니다.</div>
+                <div class="dialog-actions">
+                    <button id="btn-outcome-action" class="btn-primary" type="button">다음 스테이지</button>
+                    <button id="btn-outcome-secondary" class="btn-secondary hidden" type="button">광고 보고 이어하기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 리더보드 모달 (HubGame 정상 응답 시에만 열림) -->
+        <div id="modal-rank" class="overlay-mask hidden">
+            <div class="dialog-box">
+                <div class="dialog-title">🏆 리더보드</div>
+                <div class="dialog-sub" id="rank-subtitle">최고 스테이지 및 점수 순위</div>
+                <ul class="rank-list" id="rank-list"></ul>
+                <button id="btn-rank-close" class="btn-secondary" type="button">닫기</button>
+            </div>
+        </div>
+
+        <div id="modal-shop" class="overlay-mask hidden">
+            <div class="dialog-box">
+                <div class="dialog-title">🛒 상점</div>
+                <div class="dialog-sub">코인과 부스터를 준비하고 구매 및 광고 설정을 관리하세요.</div>
+                <div class="shop-list" id="shop-list"></div>
+                <button id="btn-restore-purchases" class="btn-secondary" type="button">구매 복원</button>
+                <button id="btn-colorblind" class="btn-secondary" type="button" aria-pressed="false">색 구분 기호: 문자</button>
+                <button id="btn-ad-privacy" class="btn-secondary hidden" type="button">광고 개인정보 설정</button>
+                <button id="btn-cloud-save" class="btn-secondary hidden" type="button">iCloud 백업 관리</button>
+                <button id="btn-shop-close" class="btn-secondary" type="button">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { VEHICLE_COLORS, DIRECTIONS, createSimState, getColorById, getColorSymbol } from './src/game-state.js';
+        import { computeStationLayout, getQueuePoint, getExitWaypoints } from './src/station-layout.js';
+        import { paintToyBus, createToyPassenger, paintStationEnvironment } from './src/toy-presentation.js';
+        import { loadStageSeed, buildStageState, getNextStageNumber } from './src/level-loader.js';
+        import { beginVehicleExit, completeVehicleArrival, boardPassenger, beginVehicleDeparture, isPuzzleCleared, getPuzzleFailureReason } from './src/puzzle-engine.js';
+        import {
+            canOfferRewardedRevive,
+            exportMetaState,
+            getCatalogWithState,
+            grantStageClearReward,
+            hydrateMetaState,
+            purchaseSoftItem,
+            registerSessionStart,
+            setAttPromptCount,
+            setTrackingAuthorizationStatus,
+            SOFT_SHOP_CATALOG
+        } from './src/monetization.js';
+        import { AD_PLACEMENTS, PRODUCT_CATALOG, SAVE_SCHEMA_VERSION } from './src/economy-config.js';
+        import { createPlatformBridge } from './src/platform-bridge.js';
+        import { selectPreferredSave } from './src/save-policy.js';
+        import { createPurchaseDelivery } from './src/purchase-delivery.js';
+        import { applyNativePurchaseSnapshot } from './src/purchase-state.js';
+        import { createRewardedActions } from './src/rewarded-actions.js';
+        import { applySafeShuffle, applySafeVip } from './src/boosters.js';
+        import { exportRound, restoreRound } from './src/round-save.js';
+        import { createHintClient } from './src/hint-client.js';
+        import { getHintKey } from './src/hint-engine.js';
+        import {
+            canVehicleExit as canVehicleExitRule,
+            findFreeDockSlot,
+            findBoardingMove,
+            getVehicleBadge,
+            getVehicleDisplayColorId,
+            isFrozenVehicleLocked,
+            updateFrozenVehicles
+        } from './src/rules.js';
+        import { installStateDebug } from './src/state-log.js';
+
+        const AppPlatform = createPlatformBridge(window);
+
+        /**
+         * =========================================================================
+         * 1. HubGame 플랫폼 연동 모듈 (중요 제약 1 & 2 엄격 준수)
+         * - window.HubGame이 없거나 응답하지 않으면 저장/리더보드 동작 금지
+         * - 미응답/부재 시 관련 UI, 버튼, 안내 문구, 메시지 일절 미노출
+         * =========================================================================
+         */
+        const HubPlatform = {
+            isReady: false,
+            playerName: '',
+
+            async initialize() {
+                if (typeof window.HubGame !== 'object' || window.HubGame === null) {
+                    this.isReady = false;
+                    this.hideAllHubUI();
+                    return false;
+                }
+
+                try {
+                    // 실제 HubGame API 응답 여부를 1200ms 타임아웃으로 검증
+                    await Promise.race([
+                        (async () => {
+                            if (typeof window.HubGame.load === 'function') {
+                                await window.HubGame.load('bus_fever_health_check');
+                                return true;
+                            }
+                            throw new Error('HubGame.load unavailable');
+                        })(),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('HubGame timeout')), 1200))
+                    ]);
+
+                    this.isReady = true;
+                    this.revealHubUI();
+                    this.syncUserAsync();
+                    return true;
+                } catch (_) {
+                    this.isReady = false;
+                    this.hideAllHubUI();
+                    return false;
+                }
+            },
+
+            hideAllHubUI() {
+                const rankBtn = document.getElementById('btn-rank');
+                const rankModal = document.getElementById('modal-rank');
+                if (rankBtn) rankBtn.classList.add('hidden');
+                if (rankModal) rankModal.classList.add('hidden');
+            },
+
+            revealHubUI() {
+                const rankBtn = document.getElementById('btn-rank');
+                if (rankBtn) rankBtn.classList.remove('hidden');
+            },
+
+            syncUserAsync() {
+                const applyUser = () => {
+                    if (!this.isReady) return;
+                    const user = window.__HUB_USER__;
+                    const resolvedName = user?.name || user?.username || '';
+                    if (resolvedName) {
+                        this.playerName = resolvedName;
+                        const sub = document.getElementById('rank-subtitle');
+                        if (sub) {
+                            sub.textContent = `${resolvedName}님의 최고 기록`;
+                        }
+                    }
+                };
+                applyUser();
+                setTimeout(applyUser, 300);
+                setTimeout(applyUser, 1000);
+            },
+
+            async saveGame(data) {
+                if (!this.isReady || typeof window.HubGame?.save !== 'function') return;
+                try {
+                    await window.HubGame.save('bus_fever_save_v1', data);
+                } catch (_) {
+                    // 실패 시 UI나 메시지 노출 금지
+                }
+            },
+
+            async loadGame() {
+                if (!this.isReady || typeof window.HubGame?.load !== 'function') return null;
+                try {
+                    return await window.HubGame.load('bus_fever_save_v1');
+                } catch (_) {
+                    return null;
+                }
+            },
+
+            async submitStageRecord(stage, score) {
+                if (!this.isReady || typeof window.HubGame?.submitScore !== 'function') return;
+                try {
+                    // 스테이지 우선 + 점수 차순 합성 점수
+                    const composite = stage * 1000000 + Math.min(Math.max(0, score), 999999);
+                    const prev = (await window.HubGame.load('bus_fever_best_composite')) ?? 0;
+                    if (composite > prev) {
+                        await window.HubGame.submitScore('bus_fever_main', composite);
+                        await window.HubGame.save('bus_fever_best_composite', composite);
+                    }
+                } catch (_) {
+                    // 실패 시 UI나 메시지 노출 금지
+                }
+            },
+
+            async getTopBoard() {
+                if (!this.isReady || typeof window.HubGame?.getLeaderboard !== 'function') return null;
+                try {
+                    return await window.HubGame.getLeaderboard('bus_fever_main', 10);
+                } catch (_) {
+                    return null;
+                }
+            }
+        };
+
+        /**
+         * =========================================================================
+         * 2. Web Audio 기반 경량 효과음 합성기 (외부 오디오 파일 의존성 제로)
+         * =========================================================================
+         */
+        const AudioSynth = {
+            ctx: null,
+            unlock() {
+                if (!this.ctx) {
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    if (AC) this.ctx = new AC();
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume().catch(() => { });
+                }
+            },
+            tone(freq, type = 'sine', dur = 0.1, vol = 0.1) {
+                this.unlock();
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + dur);
+            },
+            tap() { this.tone(540, 'triangle', 0.08, 0.1); },
+            bump() { this.tone(145, 'sawtooth', 0.15, 0.12); },
+            seat() { this.tone(720, 'sine', 0.08, 0.1); },
+            depart() {
+                this.tone(440, 'triangle', 0.11, 0.12);
+                setTimeout(() => this.tone(660, 'triangle', 0.16, 0.13), 75);
+            },
+            victory() {
+                [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+                    setTimeout(() => this.tone(f, 'triangle', 0.2, 0.13), i * 85);
+                });
+            }
+        };
+
+        /**
+         * =========================================================================
+         * 3. 순수 게임 시뮬레이션 상태 및 레벨 생성 규칙 (렌더러 분리)
+         * =========================================================================
+         */
+        const SimState = createSimState();
+        let levelSeedData = null;
+        let nativeAppInactive = false;
+        let pendingOutcomeAction = null;
+        let pendingOutcomeSecondaryAction = null;
+
+        function generateStage(stageNum) {
+            buildStageState(SimState, stageNum, levelSeedData);
+        }
+
+        function canVehicleExit(veh) {
+            return canVehicleExitRule(SimState, veh);
+        }
+
+        function createSaveState() {
+            return {
+                schemaVersion: SAVE_SCHEMA_VERSION,
+                nativePurchaseRevision: AppPlatform.purchaseRevision,
+                updatedAt: Date.now(),
+                stage: SimState.stage,
+                score: SimState.score,
+                shufflesLeft: SimState.shufflesLeft,
+                vipLeft: SimState.vipLeft,
+                round: exportRound(SimState),
+                meta: exportMetaState(SimState)
+            };
+        }
+
+        async function persistProgress(reason = 'manual_save') {
+            resetHint();
+            const saveData = createSaveState();
+            const result = await AppPlatform.saveGame(saveData);
+            if (result.persisted && !reason.startsWith('puzzle_')) {
+                AppPlatform.syncCloudSave(saveData).then(cloudResult => {
+                    AppPlatform.logEvent('cloud_save_queued', { reason, queued: cloudResult.queued, updatedAt: saveData.updatedAt });
+                });
+            }
+            return { ...saveData, persisted: result.persisted };
+        }
+
+        const deliverPurchase = createPurchaseDelivery(SimState, AppPlatform, persistProgress);
+        const rewardedActions = createRewardedActions(SimState, AppPlatform, persistProgress, refreshHUD);
+        const hintClient = createHintClient();
+        let hintRequestVersion = 0;
+        let displayedHintKey = null;
+        let purchaseInProgress = false;
+        let commerceReady = false;
+        let commerceRefreshPending = false;
+        let commerceRefreshTimer = null;
+
+        function updateGameplayPause() {
+            if (!gameInstance) return;
+            if (nativeAppInactive || purchaseInProgress) gameInstance.scene.pause('JamPuzzleScene');
+            else gameInstance.scene.resume('JamPuzzleScene');
+        }
+
+        function setPurchaseBusy(busy) {
+            purchaseInProgress = busy;
+            updateGameplayPause();
+        }
+
+        function schedulePurchaseRefresh() {
+            if (!AppPlatform.capabilities.nativePurchaseDelivery) return;
+            commerceRefreshPending = true;
+            if (!commerceReady || nativeAppInactive || commerceRefreshTimer) return;
+            commerceRefreshTimer = setTimeout(async () => {
+                commerceRefreshTimer = null;
+                if (nativeAppInactive) return;
+                if (purchaseInProgress || rewardedActions.busy || AppPlatform.fullscreenBusy) { schedulePurchaseRefresh(); return; }
+                commerceRefreshPending = false;
+                try { await reconcilePurchases(); }
+                catch { showToast('구매 내역을 확인하지 못했습니다. 상점에서 다시 복원해 주세요.'); }
+            }, 500);
+        }
+
+        async function reconcilePurchases({ userInitiated = false } = {}) {
+            if (!AppPlatform.capabilities.nativePurchaseDelivery) return { verified: false, unavailable: true };
+            if (purchaseInProgress || rewardedActions.busy || AppPlatform.fullscreenBusy) { schedulePurchaseRefresh(); return { verified: false }; }
+            setPurchaseBusy(true);
+            try {
+                let saved = await persistProgress('before_storekit_sync');
+                if (!saved.persisted) {
+                    // Recover the authoritative revision if a previous commit reply was lost.
+                    const recovery = await AppPlatform.getEntitlements();
+                    if (!recovery.verified) throw new Error('purchase_recovery_failed');
+                    applyNativePurchaseSnapshot(SimState, recovery.snapshot);
+                    saved = await persistProgress('storekit_revision_recovered');
+                    if (!saved.persisted) throw new Error('purchase_save_failed');
+                }
+                if (userInitiated) {
+                    await AppPlatform.restorePurchases({ userInitiated: true });
+                    if (!AppPlatform.lastRestoreSucceeded) throw new Error('restore_failed');
+                }
+                for (const transaction of await AppPlatform.getPendingTransactions()) await deliverPurchase(transaction);
+                const entitlements = await AppPlatform.getEntitlements();
+                if (!entitlements.verified) throw new Error('entitlements_unverified');
+                // Includes removals after refund/revocation, without regranting starter consumables.
+                applyNativePurchaseSnapshot(SimState, entitlements.snapshot);
+                refreshHUD();
+                renderShopModal();
+                return entitlements;
+            } finally {
+                setPurchaseBusy(false);
+                if (commerceRefreshPending) schedulePurchaseRefresh();
+            }
+        }
+
+        async function observeTrackingAuthorization() {
+            const currentStatus = await AppPlatform.getTrackingAuthorizationStatus();
+            setTrackingAuthorizationStatus(SimState, currentStatus);
+            setAttPromptCount(SimState, AppPlatform.lastAdsConfiguration?.prompted === true ? 1 : 0);
+            AppPlatform.logEvent('att_status_observed', { status: currentStatus });
+        }
+
+        async function refreshAdPrivacyButton() {
+            const button = document.getElementById('btn-ad-privacy');
+            const { requirement } = await AppPlatform.getPrivacyOptionsStatus();
+            button.classList.toggle('hidden', requirement === 'unavailable');
+            button.textContent = requirement === 'required' ? '광고 개인정보 선택' : '광고 개인정보 설정';
+        }
+
+        async function refreshCloudButton() {
+            const button = document.getElementById('btn-cloud-save');
+            button.classList.toggle('hidden', !AppPlatform.capabilities.nativeCloudSave);
+            if (!AppPlatform.capabilities.nativeCloudSave) return;
+            const { state } = await AppPlatform.getCloudSaveStatus();
+            const labels = { signed_out: 'iCloud 로그인 필요', account_changed: 'iCloud 계정 연결 확인',
+                ready: 'iCloud 백업 관리', download_available: 'iCloud 백업 불러오기',
+                conflict: 'iCloud 진행 선택 필요', queued: 'iCloud 백업 요청됨',
+                quota: 'iCloud 백업 용량 확인', invalid_data: 'iCloud 백업 확인 필요', unavailable: 'iCloud 연결 확인' };
+            button.textContent = labels[state] || 'iCloud 백업 관리';
+        }
+
+        function renderShopModal() {
+            const shopList = document.getElementById('shop-list');
+            const catalog = getCatalogWithState(SimState, AppPlatform.getProducts());
+            const hardRows = catalog.map(product => `
+              <div class="shop-row">
+                <div class="shop-copy">
+                  <div class="shop-title">${product.title}</div>
+                  <div class="shop-desc">${product.description}</div>
+                </div>
+                <button class="shop-buy-btn" type="button" data-kind="iap" data-product-id="${product.id}" ${product.owned || purchaseInProgress || !product.available || !AppPlatform.capabilities.nativeIap || AppPlatform.initializationFailed ? 'disabled' : ''}>${product.owned ? '보유중' : !AppPlatform.capabilities.nativeIap || AppPlatform.initializationFailed ? '준비 중' : !product.available ? '판매 준비 중' : product.priceLabel}</button>
+              </div>
+            `).join('');
+            const softRows = SOFT_SHOP_CATALOG.map(item => `
+              <div class="shop-row">
+                <div class="shop-copy">
+                  <div class="shop-title">${item.title}</div>
+                  <div class="shop-desc">코인 ${item.cost} 소모</div>
+                </div>
+                <button class="shop-buy-btn" type="button" data-kind="soft" data-product-id="${item.id}" ${SimState.coins < item.cost ? 'disabled' : ''}>${item.cost}C</button>
+              </div>
+            `).join('');
+
+            shopList.innerHTML = `${hardRows}${softRows}`;
+            shopList.querySelectorAll('[data-product-id]').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const productId = button.dataset.productId;
+                    const kind = button.dataset.kind;
+                    if (kind === 'iap') {
+                        if (purchaseInProgress || rewardedActions.busy || AppPlatform.fullscreenBusy) return;
+                        setPurchaseBusy(true);
+                        button.disabled = true;
+                        try {
+                        if (!(await persistProgress('before_iap_purchase')).persisted) throw new Error('purchase_save_failed');
+                        const result = await AppPlatform.purchaseProduct(productId);
+                        if (!result.success) {
+                            AppPlatform.logEvent('iap_purchase_failed', { productId, reason: result.error?.message || 'purchase_failed' });
+                            showToast(result.status === 'pending' ? '구매 승인을 기다리고 있습니다. 승인되면 자동으로 반영합니다.' : result.status === 'cancelled' ? '구매를 취소했습니다.' : '구매를 완료하지 못했습니다.');
+                            return;
+                        }
+                        const { message } = await deliverPurchase(result);
+                        AppPlatform.logEvent('iap_purchase_completed', { productId });
+                        refreshHUD();
+                        renderShopModal();
+                        showToast(message);
+                        } catch {
+                            showToast('구매 저장을 완료하지 못했습니다. 재실행 시 다시 확인합니다.');
+                        } finally {
+                            setPurchaseBusy(false);
+                            renderShopModal();
+                            if (commerceRefreshPending) schedulePurchaseRefresh();
+                        }
+                    } else {
+                        const result = purchaseSoftItem(SimState, productId);
+                        if (!result.ok) {
+                            AppPlatform.logEvent('soft_purchase_failed', { productId, reason: result.message });
+                            showToast(result.message);
+                            return;
+                        }
+                        AppPlatform.logEvent('soft_purchase_completed', { productId });
+                        await persistProgress('soft_purchase');
+                        refreshHUD();
+                        renderShopModal();
+                        showToast(result.message);
+                    }
+                });
+            });
+        }
+
+        function openShopModal() {
+            renderShopModal();
+            refreshCloudButton();
+            AppPlatform.refreshProducts().then(renderShopModal);
+            document.getElementById('modal-shop').classList.remove('hidden');
+            AppPlatform.logEvent('shop_open', { coins: SimState.coins, products: PRODUCT_CATALOG.length });
+        }
+
+        function closeShopModal() {
+            document.getElementById('modal-shop').classList.add('hidden');
+        }
+
+        async function handleRewardedBoost() {
+            AppPlatform.logEvent('rewarded_request', { placement: AD_PLACEMENTS.rewardBoost, stage: SimState.stage });
+            const result = await rewardedActions.request(AD_PLACEMENTS.rewardBoost);
+            if (result.status === 'busy') return;
+            if (result.status !== 'completed') {
+                AppPlatform.logEvent('rewarded_incomplete', { placement: AD_PLACEMENTS.rewardBoost, stage: SimState.stage });
+                showToast('광고 보상을 완료하지 못했습니다.');
+                return;
+            }
+            const reward = result.reward;
+            AppPlatform.logEvent('rewarded_completed', { placement: AD_PLACEMENTS.rewardBoost, stage: SimState.stage, coinsGranted: reward.coinsGranted });
+            refreshHUD();
+            showToast(result.persisted ? `보상 지급! 셔플 +${reward.shufflesGranted}, VIP +${reward.vipGranted}, 코인 +${reward.coinsGranted}` : '보상을 받았지만 저장하지 못했습니다. 저장 공간을 확인해 주세요.');
+        }
+
+        async function handleRewardedRevive() {
+            AppPlatform.logEvent('rewarded_request', { placement: AD_PLACEMENTS.revive, stage: SimState.stage });
+            const result = await rewardedActions.request(AD_PLACEMENTS.revive);
+            if (result.status === 'busy') return;
+            if (result.status !== 'completed') {
+                AppPlatform.logEvent('rewarded_incomplete', { placement: AD_PLACEMENTS.revive, stage: SimState.stage });
+                showToast('리바이브 광고를 완료하지 못했습니다.');
+                return;
+            }
+            if (result.roundId !== SimState.roundId || result.stage !== SimState.stage) return;
+            const reward = result.reward;
+            const scene = gameInstance?.scene?.getScene('JamPuzzleScene');
+            if (scene) {
+                scene.applyFrontQueueEffects(true);
+                scene.renderPassengerQueue();
+                scene.evaluateFailure();
+            }
+            document.getElementById('modal-outcome').classList.add('hidden');
+            AppPlatform.logEvent('rewarded_completed', { placement: AD_PLACEMENTS.revive, stage: SimState.stage });
+            refreshHUD();
+            showToast(result.persisted ? `이어하기 성공! 셔플 +${reward.shufflesGranted}, VIP +${reward.vipGranted}` : '이어하기를 적용했지만 저장하지 못했습니다. 저장 공간을 확인해 주세요.');
+        }
+
+        /**
+         * =========================================================================
+         * 4. Phaser 3 씬 (고정 타임스텝 Fixed Timestep 루프 — 제약 4 준수)
+         * =========================================================================
+         */
+        class JamPuzzleScene extends Phaser.Scene {
+            constructor() {
+                super('JamPuzzleScene');
+                this.FIXED_DT = 1 / 60; // 모든 디바이스에서 동일한 논리 속도 유지
+                this.accumulator = 0;
+                this.boardTimer = 0;
+                this.envGraphics = null;
+                this.vehNodes = new Map();
+                this.queueNodes = [];
+                this.dockCenters = [];
+                this.metrics = {};
+                this.flyingPassengers = new Set();
+                this.transientVisuals = new Set();
+                this.visualEpoch = 0;
+                this.motionReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            }
+
+            create() {
+                this.envGraphics = this.add.graphics();
+                this.recalculateMetrics();
+                this.drawBoardEnvironment();
+                this.buildStageVisuals();
+                this.applyFrontQueueEffects(false);
+
+                this.evaluateVictory();
+                this.evaluateFailure();
+
+                this.scale.on('resize', () => {
+                    // Presentation can fast-forward on rotation without leaving a model in transit.
+                    SimState.vehicles.forEach(vehicle => {
+                        if (vehicle.status === 'MOVING') completeVehicleArrival(SimState, vehicle);
+                        else if (vehicle.status === 'DEPARTING') vehicle.status = 'DEPARTED';
+                    });
+                    this.recalculateMetrics();
+                    this.drawBoardEnvironment();
+                    this.buildStageVisuals();
+                    this.applyFrontQueueEffects(false);
+                    this.evaluateVictory();
+                    this.evaluateFailure();
+                });
+                this.events.once('shutdown', () => this.clearStageVisuals());
+            }
+
+            recalculateMetrics() {
+                this.metrics = computeStationLayout(this.scale.width, this.scale.height, SimState.cols, SimState.rows, SimState.dockCount);
+            }
+
+            drawBoardEnvironment() {
+                this.dockCenters = paintStationEnvironment(this, this.envGraphics, this.metrics, SimState);
+                this.stationLabels?.destroy(true);
+                this.stationLabels = this.add.container(0, 0).setDepth(3);
+                const { w, queueTop, dockY, dockH } = this.metrics;
+                this.stationTitle = this.add.text(w / 2, queueTop + 8, 'BUS STOP', { fontSize: '13px', fontStyle: 'bold', color: '#f7f7e7', letterSpacing: 3 }).setOrigin(.5);
+                this.stationCaption = this.add.text(w / 2, queueTop + 27, '승객들이 버스를 기다리고 있어요', { fontSize: '10px', color: '#f5f5e7' }).setOrigin(.5);
+                this.stationLabels.add([this.stationTitle, this.stationCaption]);
+                this.dockCenters.forEach((dock, index) => this.stationLabels.add(this.add.text(dock.x, dockY + dockH / 2 + 9, `${index + 1}번`, { fontSize: '9px', fontStyle: 'bold', color: '#eef3eb' }).setOrigin(.5)));
+            }
+
+            clearStageVisuals() {
+                resetHint();
+                this.visualEpoch++;
+                this.tweens.killAll();
+                this.time.removeAllEvents();
+                this.flyingPassengers.forEach(node => node.destroy());
+                this.flyingPassengers.clear();
+                this.transientVisuals.forEach(node => node.destroy());
+                this.transientVisuals.clear();
+                this.boardTimer = 0;
+                this.accumulator = 0;
+                this.vehNodes.forEach(node => node.destroy());
+                this.vehNodes.clear();
+                this.queueNodes.forEach(node => node.destroy());
+                this.queueNodes = [];
+            }
+
+            setHintTarget(vehicleId) {
+                const previous = this.hintVehicleId;
+                this.hintVehicleId = vehicleId;
+                for (const id of new Set([previous, vehicleId])) {
+                    const vehicle = SimState.vehicles.find(v => v.id === id);
+                    const node = this.vehNodes.get(id);
+                    if (node && vehicle) this.paintVehicle(node, vehicle);
+                }
+            }
+
+            buildStageVisuals() {
+                this.clearStageVisuals();
+
+                SimState.vehicles.forEach(veh => {
+                    if (veh.status === 'DEPARTED') return;
+                    const node = this.createVehicleNode(veh);
+                    this.vehNodes.set(veh.id, node);
+                });
+
+                this.syncVisualPositions();
+            }
+
+            createVehicleNode(veh) {
+                const container = this.add.container(0, 0);
+                const gfx = this.add.graphics();
+                const text = this.add.text(0, 0, `${veh.passengers}/${veh.capacity}`, {
+                    fontSize: '12px',
+                    fontStyle: 'bold',
+                    color: '#ffffff',
+                    stroke: '#000000',
+                    strokeThickness: 3
+                }).setOrigin(0.5);
+                const badge = this.add.text(0, 0, '', {
+                    fontSize: '11px',
+                    fontStyle: 'bold',
+                    color: '#e2e8f0',
+                    stroke: '#0f172a',
+                    strokeThickness: 4
+                }).setOrigin(0.5);
+
+                container.add([gfx, text, badge]);
+                container.setData('gfx', gfx);
+                container.setData('text', text);
+                container.setData('badge', badge);
+
+                this.paintVehicle(container, veh);
+
+                const isHoriz = veh.dir === 'LEFT' || veh.dir === 'RIGHT';
+                const hitW = this.metrics.cell * (isHoriz ? veh.length : 1);
+                const hitH = this.metrics.cell * (!isHoriz ? veh.length : 1);
+                container.setSize(hitW, hitH);
+                container.setInteractive({ useHandCursor: true });
+
+                container.on('pointerdown', () => this.onVehicleTap(veh));
+                return container;
+            }
+
+            paintVehicle(container, veh) {
+                const gfx = container.getData('gfx'), text = container.getData('text'), badge = container.getData('badge');
+                const parked = veh.status === 'PARKED' || veh.status === 'MOVING';
+                const direction = container.getData('travelDir') || (parked ? veh.dir : 'UP');
+                const colorId = getVehicleDisplayColorId(veh);
+                const color = colorId ? getColorById(colorId).hex : 0x8d82ad;
+                const width = parked ? this.metrics.cell * .65 : this.metrics.dockW * .65;
+                const length = parked ? this.metrics.cell * (veh.length === 2 ? 1.75 : .91) : this.metrics.dockH * .86;
+                const count = container.getData('visualPassengers') ?? veh.passengers;
+                paintToyBus(gfx, { color, width, length, direction, seats: veh.capacity, filled: count,
+                    mystery: !colorId, frozen: veh.gimmick === 'frozen' && veh.isFrozen,
+                    tunnel: veh.gimmick === 'tunnel', hint: this.hintVehicleId === veh.id && veh.status === 'PARKED' });
+                const horizontal = ['LEFT', 'RIGHT'].includes(direction);
+                const bodyW = horizontal ? length : width, bodyH = horizontal ? width : length;
+                container.setData({ bodyW, bodyH });
+                const labelY = bodyH / 2 + 3;
+                text.setFontSize(parked ? Math.max(9, Math.min(12, this.metrics.cell * .18)) : 11);
+                text.setColor('#ffffff').setStroke('#315568', 3);
+                text.setText(`${colorId ? getColorSymbol(colorId, SimState.colorBlind) + ' ' : '? '}${count}/${veh.capacity}`);
+                text.setPosition(0, labelY);
+                badge.setText(getVehicleBadge(veh, SimState.colorBlind));
+                badge.setPosition(0, -bodyH / 2 - 7);
+                container.setDepth(parked ? 10 : 30);
+            }
+
+            applyFrontQueueEffects(showToastOnThaw = true) {
+                const thawedVehicles = updateFrozenVehicles(SimState);
+                thawedVehicles.forEach(veh => {
+                    const node = this.vehNodes.get(veh.id);
+                    if (node) {
+                        this.paintVehicle(node, veh);
+                    }
+                });
+
+                if (showToastOnThaw && thawedVehicles.length > 0) {
+                    showToast(thawedVehicles.length === 1
+                        ? '빙결 차량이 해제되었습니다!'
+                        : `${thawedVehicles.length}대의 빙결 차량이 해제되었습니다!`);
+                }
+            }
+
+            getParkedCoords(veh) {
+                const { gridLeft, gridTop, cell } = this.metrics;
+                let sc = 0;
+                let sr = 0;
+                veh.cells.forEach(c => { sc += c.c; sr += c.r; });
+                return {
+                    x: gridLeft + (sc / veh.cells.length + 0.5) * cell,
+                    y: gridTop + (sr / veh.cells.length + 0.5) * cell
+                };
+            }
+
+            syncVisualPositions() {
+                SimState.vehicles.forEach(veh => {
+                    const node = this.vehNodes.get(veh.id);
+                    if (!node) return;
+
+                    if (veh.status === 'PARKED') {
+                        const pos = this.getParkedCoords(veh);
+                        veh.x = pos.x;
+                        veh.y = pos.y;
+                        node.setPosition(pos.x, pos.y);
+                        node.setScale(1);
+                        this.paintVehicle(node, veh);
+                    } else if (veh.status === 'DOCKED' && veh.dockIdx >= 0) {
+                        const slot = this.dockCenters[veh.dockIdx];
+                        if (slot) {
+                            veh.x = slot.x;
+                            veh.y = slot.y;
+                            node.setPosition(slot.x, slot.y);
+                            node.setScale(1);
+                            this.paintVehicle(node, veh);
+                        }
+                    }
+                });
+                this.renderPassengerQueue();
+            }
+
+            renderPassengerQueue() {
+                const previous = this.queueNodes;
+                const maxVisible = Math.min(SimState.passengerQueue.length, 36);
+                this.queueNodes = [];
+                for (let i = 0; i < maxVisible; i++) {
+                    const cid = SimState.passengerQueue[i], symbol = getColorSymbol(cid, SimState.colorBlind);
+                    let holder = previous[i];
+                    if (!holder || holder.getData('colorId') !== cid || holder.getData('colorSymbol') !== symbol) {
+                        if (holder) this.destroyQueuePassenger(holder);
+                        holder = createToyPassenger(this, getColorById(cid).hex, symbol, this.metrics.h < 740 ? .82 : .95);
+                        holder.setData({ colorId: cid, colorSymbol: symbol });
+                        if (!this.motionReduced) this.tweens.add({ targets: holder.getData('body'), y: -1.2, duration: 480 + i * 19, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+                        const start = getQueuePoint(i + 1, this.metrics);
+                        holder.setPosition(start.x, start.y);
+                    }
+                    const destination = getQueuePoint(i, this.metrics);
+                    holder.setDepth(20 + Math.floor(destination.y / 30));
+                    this.tweens.killTweensOf(holder);
+                    this.tweens.add({ targets: holder, x: destination.x, y: destination.y, duration: this.motionReduced ? 0 : 190, ease: 'Sine.easeOut' });
+                    this.queueNodes.push(holder);
+                }
+                previous.slice(maxVisible).forEach(node => this.destroyQueuePassenger(node));
+                const showSign = SimState.passengerQueue.length <= 24;
+                this.stationTitle?.setVisible(showSign);
+                this.stationCaption?.setVisible(showSign);
+            }
+
+            destroyQueuePassenger(holder) {
+                this.tweens.killTweensOf([holder, ...holder.list]);
+                holder.destroy();
+            }
+
+            animatePassengerBoarding(move) {
+                const node = this.vehNodes.get(move.vehicle.id);
+                if (!node) return;
+                const epoch = this.visualEpoch;
+                const start = getQueuePoint(Math.min(move.queueIndex, 35), this.metrics);
+                const queued = this.queueNodes.splice(move.queueIndex, 1)[0];
+                if (queued) { start.x = queued.x; start.y = queued.y; this.destroyQueuePassenger(queued); }
+                const person = createToyPassenger(this, getColorById(move.colorId).hex, getColorSymbol(move.colorId, SimState.colorBlind), 1);
+                person.setPosition(start.x, start.y).setDepth(80);
+                this.flyingPassengers.add(person);
+                node.setData('visualPassengers', move.vehicle.passengers - 1);
+                this.paintVehicle(node, move.vehicle);
+                const legs = [person.getData('leftLeg'), person.getData('rightLeg')];
+                const gait = this.motionReduced ? null : this.tweens.add({ targets: legs, scaleY: { from: .55, to: 1.25 }, duration: 80, yoyo: true, repeat: -1, onUpdate: () => { legs[1].scaleY = 1.8 - legs[0].scaleY; } });
+                const door = { x: node.x + node.getData('bodyW') / 2 + 4, y: node.y + 5 };
+                const walk = this.motionReduced ? 60 : 470;
+                this.tweens.add({ targets: person, x: door.x, y: door.y - 17, duration: walk, ease: 'Sine.easeInOut', onComplete: () => {
+                    if (epoch !== this.visualEpoch || !person.active) return;
+                    this.tweens.add({ targets: person, x: node.x + 4, y: node.y, scale: .2, alpha: 0, duration: this.motionReduced ? 30 : 160, onComplete: () => {
+                        gait?.stop(); person.destroy(); this.flyingPassengers.delete(person);
+                        if (epoch !== this.visualEpoch || !node.active) return;
+                        node.setData('visualPassengers', null);
+                        this.paintVehicle(node, move.vehicle);
+                        this.tweens.add({ targets: node, y: node.y + 2, duration: 65, yoyo: true });
+                        this.evaluateFailure();
+                    } });
+                } });
+            }
+
+            driveToDock(node, veh, destination) {
+                const epoch = this.visualEpoch;
+                const points = getExitWaypoints(this.metrics, veh.dir, { x: node.x, y: node.y }, destination);
+                const next = () => {
+                    if (epoch !== this.visualEpoch || !node.active) return;
+                    const point = points.shift();
+                    if (!point) {
+                        node.setData('travelDir', null);
+                        if (!completeVehicleArrival(SimState, veh)) return;
+                        veh.x = node.x; veh.y = node.y;
+                        this.paintVehicle(node, veh);
+                        if (veh.gimmick === 'mystery') showToast('미스터리 차량의 색상이 공개되었습니다!');
+                        this.evaluateFailure();
+                        return;
+                    }
+                    const dx = point.x - node.x, dy = point.y - node.y;
+                    node.setData('travelDir', Math.abs(dx) > Math.abs(dy) ? dx > 0 ? 'RIGHT' : 'LEFT' : dy > 0 ? 'DOWN' : 'UP');
+                    this.paintVehicle(node, veh);
+                    this.tweens.add({ targets: node, x: point.x, y: point.y, duration: this.motionReduced ? 30 : Math.max(90, Math.min(230, Math.hypot(dx, dy) * 1.1)), ease: 'Sine.easeInOut', onComplete: next });
+                };
+                next();
+            }
+
+            onVehicleTap(veh) {
+                if (nativeAppInactive || purchaseInProgress || rewardedActions.busy || this.flyingPassengers.size || SimState.isOver || SimState.isClear || veh.status !== 'PARKED' || !SimState.vehicles.includes(veh)) return;
+
+                if (isFrozenVehicleLocked(veh)) {
+                    AudioSynth.bump();
+                    showToast(`빙결 차량 해제 조건: ${veh.unlockColorId || veh.colorId} 승객이 맨 앞에 와야 합니다.`);
+                    return;
+                }
+
+                const freeDock = findFreeDockSlot(SimState);
+                if (freeDock === -1) {
+                    AudioSynth.bump();
+                    showToast('정류장 슬롯이 가득 찼습니다!');
+                    return;
+                }
+
+                const node = this.vehNodes.get(veh.id);
+                if (!canVehicleExit(veh)) {
+                    AudioSynth.bump();
+                    if (node) {
+                        const vec = DIRECTIONS[veh.dir];
+                        this.tweens.add({
+                            targets: node,
+                            x: veh.x + vec.dc * 10,
+                            y: veh.y + vec.dr * 10,
+                            duration: 70,
+                            yoyo: true,
+                            ease: 'Quad.easeOut'
+                        });
+                    }
+                    return;
+                }
+
+                AudioSynth.tap();
+                if (!beginVehicleExit(SimState, veh)) return;
+                persistProgress('puzzle_exit');
+
+                const dest = this.dockCenters[freeDock];
+                if (node && dest) {
+                    this.driveToDock(node, veh, dest);
+                } else {
+                    completeVehicleArrival(SimState, veh);
+                    this.evaluateFailure();
+                }
+            }
+
+            /**
+             * 고정 타임스텝 누적기 루프 (제약 4: 모든 디바이스에서 동일한 게임 속도 보장)
+             */
+            update(time, delta) {
+                const clampedDt = Math.min(delta / 1000, 0.1);
+                this.accumulator += clampedDt;
+
+                while (this.accumulator >= this.FIXED_DT) {
+                    this.fixedStep(this.FIXED_DT);
+                    this.accumulator -= this.FIXED_DT;
+                }
+            }
+
+            fixedStep(dt) {
+                if (nativeAppInactive || purchaseInProgress || rewardedActions.busy || SimState.isOver || SimState.isClear) return;
+
+                if (this.boardTimer > 0) {
+                    this.boardTimer -= dt;
+                    return;
+                }
+                if (this.flyingPassengers.size) return;
+
+                if (SimState.passengerQueue.length > 0) {
+                    const boardingMove = boardPassenger(SimState);
+                    const targetVeh = boardingMove?.vehicle;
+
+                    if (targetVeh) {
+                        this.boardTimer = this.motionReduced ? .14 : .72;
+
+                        AudioSynth.seat();
+                        if (boardingMove.viaTunnel) {
+                            showToast('터널 차량이 대기열 뒤 승객을 먼저 태웠습니다!');
+                        }
+                        this.applyFrontQueueEffects(true);
+                        refreshHUD();
+                        this.animatePassengerBoarding(boardingMove);
+                        this.renderPassengerQueue();
+
+                        if (targetVeh.passengers >= targetVeh.capacity) {
+                            this.dispatchVehicle(targetVeh, this.motionReduced ? 100 : 680);
+                        }
+                        this.evaluateFailure();
+                        persistProgress('puzzle_boarding');
+                    }
+                }
+            }
+
+            dispatchVehicle(veh, boardingDelay = 0) {
+                if (!beginVehicleDeparture(SimState, veh)) return;
+                refreshHUD();
+                persistProgress('puzzle_departure');
+
+                const node = this.vehNodes.get(veh.id);
+                if (node) {
+                    const epoch = this.visualEpoch;
+                    this.time.delayedCall(boardingDelay, () => {
+                        if (epoch !== this.visualEpoch || !node.active) return;
+                        AudioSynth.depart();
+                        node.setData({ travelDir: 'RIGHT', visualPassengers: null });
+                        this.paintVehicle(node, veh);
+                        const label = this.add.text(node.x, node.y - 40, '만석! 출발~', { fontSize: '13px', fontStyle: 'bold', color: '#ffffff', backgroundColor: '#388d73', padding: { x: 7, y: 4 } }).setOrigin(.5).setDepth(90);
+                        this.transientVisuals.add(label);
+                        this.tweens.add({ targets: label, y: label.y - 22, alpha: 0, delay: 180, duration: 400, onComplete: () => { label.destroy(); this.transientVisuals.delete(label); } });
+                        for (let i = 0; i < 3 && !this.motionReduced; i++) {
+                            const puff = this.add.ellipse(node.x - 12 - i * 10, node.y + 10, 10 + i * 4, 7 + i * 2, 0xffffff, .65).setDepth(25);
+                            this.transientVisuals.add(puff);
+                            this.tweens.add({ targets: puff, x: puff.x - 18, alpha: 0, scale: 1.7, duration: 380 + i * 70, onComplete: () => { puff.destroy(); this.transientVisuals.delete(puff); } });
+                        }
+                        this.tweens.add({ targets: node, x: this.metrics.left + this.metrics.contentW + 100, duration: this.motionReduced ? 90 : 540, ease: 'Sine.easeIn', onComplete: () => {
+                            if (epoch !== this.visualEpoch) return;
+                            veh.status = 'DEPARTED'; node.destroy(); this.vehNodes.delete(veh.id);
+                            this.evaluateVictory(); this.evaluateFailure();
+                        } });
+                    });
+                } else {
+                    veh.status = 'DEPARTED';
+                    this.evaluateVictory();
+                }
+            }
+
+            evaluateVictory() {
+                if (this.flyingPassengers.size || SimState.vehicles.some(v => v.status === 'MOVING' || v.status === 'DEPARTING')) return;
+                if (isPuzzleCleared(SimState) && !SimState.isClear) {
+                    SimState.isClear = true;
+                    AudioSynth.victory();
+
+                    const cleared = SimState.stage;
+                    const reward = grantStageClearReward(SimState, cleared);
+                    const nextStage = getNextStageNumber(levelSeedData, cleared);
+                    SimState.stage = nextStage ?? cleared;
+                    SimState.lastClearedStage = Math.max(SimState.lastClearedStage || 0, cleared);
+                    SimState.score += cleared * 300;
+                    refreshHUD();
+
+                    persistProgress();
+                    if (reward.shouldShowInterstitial) {
+                        AppPlatform.showInterstitialAd(AD_PLACEMENTS.stageClear);
+                    }
+                    AppPlatform.logEvent('stage_clear', {
+                        clearedStage: cleared,
+                        score: SimState.score,
+                        coinsAwarded: reward.coinsAwarded
+                    });
+
+                    openOutcomeModal(
+                        true,
+                        nextStage ? `STAGE ${cleared} CLEAR!` : 'CHAPTER 1 CLEAR!',
+                        `승객 전원 탑승 완료! 코인 +${reward.coinsAwarded} / 누적 점수: ${SimState.score.toLocaleString()}점`,
+                        { primaryLabel: nextStage ? `스테이지 ${nextStage} 시작` : '마지막 스테이지 다시하기' }
+                    );
+                }
+            }
+
+            evaluateFailure() {
+                if (SimState.isClear || SimState.isOver || this.flyingPassengers.size || SimState.vehicles.some(v => v.status === 'DEPARTING')) return;
+
+                const failureReason = getPuzzleFailureReason(SimState);
+                if (failureReason) {
+                    SimState.isOver = true;
+                    AppPlatform.logEvent('stage_fail', {
+                        failedStage: SimState.stage,
+                        queueFront: SimState.passengerQueue[0] || null,
+                        dock: [...SimState.dock.slots]
+                    });
+                    AudioSynth.bump();
+                    openOutcomeModal(
+                        false,
+                        failureReason === 'dock_full' ? '정류장 포화!' : '길이 막혔어요!',
+                        failureReason === 'dock_full' ? '대기 승객과 일치하는 색상의 차량이 정류장에 없습니다.' : '출차하거나 승객을 태울 수 있는 차량이 없습니다.',
+                        {
+                            secondaryLabel: canOfferRewardedRevive(SimState) ? '광고 보고 이어하기' : '',
+                            secondaryAction: canOfferRewardedRevive(SimState) ? handleRewardedRevive : null
+                        }
+                    );
+                    persistProgress('puzzle_failure');
+                }
+            }
+
+            triggerShuffle() {
+                if (rewardedActions.busy || this.flyingPassengers.size) return;
+                const result = applySafeShuffle(SimState);
+                if (!result.ok) { showToast('지금은 안전하게 섞을 수 없어요. 사용 횟수는 유지됩니다.'); return; }
+                this.applyFrontQueueEffects(true);
+                AudioSynth.tap();
+                persistProgress();
+                refreshHUD();
+                this.renderPassengerQueue();
+                showToast('승객 대기열을 섞었습니다!');
+            }
+
+            triggerVip() {
+                if (rewardedActions.busy || this.flyingPassengers.size) return;
+                const result = applySafeVip(SimState);
+                if (!result.ok) { showToast('지금은 VIP를 사용할 수 없어요. 사용 횟수는 유지됩니다.'); return; }
+                const target = result.vehicle;
+                this.applyFrontQueueEffects(true);
+                refreshHUD();
+                this.renderPassengerQueue();
+                this.dispatchVehicle(target);
+                persistProgress('vip_used');
+                showToast('VIP 특급 버스가 즉시 출발했습니다!');
+            }
+        }
+
+        /**
+         * =========================================================================
+         * 5. DOM UI 컨트롤러 및 초기화
+         * =========================================================================
+         */
+        let gameInstance = null;
+        let toastTimeout = null;
+
+        function resetHint() {
+            hintRequestVersion++;
+            hintClient.cancel();
+            displayedHintKey = null;
+            gameInstance?.scene?.getScene('JamPuzzleScene')?.setHintTarget(null);
+            document.getElementById('hint-message').textContent = '다음에 움직일 차량이 궁금하면 눌러 보세요.';
+        }
+
+        async function handleHint() {
+            if (hintClient.busy || rewardedActions.busy || SimState.isOver || SimState.isClear) return;
+            const version = ++hintRequestVersion;
+            const key = getHintKey(SimState);
+            document.getElementById('hint-message').textContent = '다음 수를 살펴보고 있어요…';
+            const pending = hintClient.request(SimState);
+            refreshHUD();
+            const result = await pending;
+            if (version !== hintRequestVersion || key !== getHintKey(SimState)) { refreshHUD(); return; }
+            const message = document.getElementById('hint-message');
+            const scene = gameInstance?.scene?.getScene('JamPuzzleScene');
+            scene?.setHintTarget(null);
+            if (result.status === 'recommended') {
+                const vehicle = SimState.vehicles.find(v => v.id === result.vehicleId);
+                if (vehicle && canVehicleExit(vehicle) && findFreeDockSlot(SimState) >= 0) {
+                    scene?.setHintTarget(vehicle.id);
+                    displayedHintKey = key;
+                    const head = vehicle.cells[0];
+                    message.textContent = `${head.r + 1}행 ${head.c + 1}열, 테두리가 표시된 차량을 움직여 보세요.`;
+                } else message.textContent = '차량이 움직인 뒤 다시 눌러 주세요.';
+            } else if (result.status === 'wait') {
+                message.textContent = '차량 이동과 승객 탑승이 끝난 뒤 다시 눌러 주세요.';
+            } else if (result.status === 'ambiguous') {
+                message.textContent = '물음표 차량 때문에 확실한 한 수를 고르기 어려워요. 빈 정류장을 남겨두세요.';
+            } else {
+                message.textContent = '지금은 확실한 한 수를 찾지 못했어요. 대기열과 출차 방향을 살펴보세요.';
+            }
+            refreshHUD();
+        }
+
+        function showToast(message) {
+            const el = document.getElementById('toast-pill');
+            el.textContent = message;
+            el.classList.add('visible');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => el.classList.remove('visible'), 1800);
+        }
+
+        function refreshHUD() {
+            if (rewardedActions.busy || (displayedHintKey && displayedHintKey !== getHintKey(SimState))) resetHint();
+            document.getElementById('ui-stage').textContent = SimState.stage;
+            document.getElementById('ui-score').textContent = SimState.score.toLocaleString();
+            document.getElementById('ui-coins').textContent = SimState.coins.toLocaleString();
+            document.getElementById('ui-boarding').textContent = `${SimState.boardedCount} / ${SimState.totalPassengers}`;
+            document.getElementById('boarding-progress').style.width = `${SimState.totalPassengers ? SimState.boardedCount / SimState.totalPassengers * 100 : 0}%`;
+            document.getElementById('ui-shuffle-count').textContent = `남음: ${SimState.shufflesLeft}`;
+            document.getElementById('ui-vip-count').textContent = `남음: ${SimState.vipLeft}`;
+            const busy = rewardedActions.busy;
+            document.getElementById('btn-hint').disabled = busy || hintClient.busy || SimState.isOver || SimState.isClear;
+            document.getElementById('btn-shuffle').disabled = busy || SimState.isOver || SimState.isClear || SimState.shufflesLeft <= 0;
+            document.getElementById('btn-vip').disabled = busy || SimState.isOver || SimState.isClear || SimState.vipLeft <= 0;
+            document.getElementById('btn-reset').disabled = busy;
+            document.getElementById('btn-reward').disabled = busy;
+            document.getElementById('btn-outcome-action').disabled = busy;
+            document.getElementById('btn-outcome-secondary').disabled = busy;
+            document.getElementById('stage-title').textContent = SimState.stageSeed?.title || '';
+            document.getElementById('stage-tutorial').textContent = SimState.stageSeed?.tutorial || '';
+            const symbolButton = document.getElementById('btn-colorblind');
+            symbolButton.textContent = SimState.colorBlind ? '색 구분 기호: 도형' : '색 구분 기호: 문자';
+            symbolButton.setAttribute('aria-pressed', String(SimState.colorBlind));
+        }
+
+        function openOutcomeModal(isWin, title, desc, options = {}) {
+            const mask = document.getElementById('modal-outcome');
+            const titleEl = document.getElementById('outcome-title');
+            const descEl = document.getElementById('outcome-desc');
+            const btnEl = document.getElementById('btn-outcome-action');
+            const secondaryBtn = document.getElementById('btn-outcome-secondary');
+
+            titleEl.textContent = title;
+            titleEl.style.color = isWin ? 'var(--accent-emerald)' : 'var(--accent-coral)';
+            descEl.textContent = desc;
+            btnEl.textContent = options.primaryLabel || (isWin ? `스테이지 ${SimState.stage} 시작` : '현재 스테이지 재도전');
+            pendingOutcomeAction = () => bootStage(SimState.stage);
+            pendingOutcomeSecondaryAction = options.secondaryAction || null;
+
+            if (options.secondaryLabel && options.secondaryAction) {
+                secondaryBtn.textContent = options.secondaryLabel;
+                secondaryBtn.classList.remove('hidden');
+            } else {
+                secondaryBtn.classList.add('hidden');
+            }
+            mask.classList.remove('hidden');
+            refreshHUD();
+        }
+
+        function bootStage(stageNum) {
+            if (rewardedActions.busy) return;
+            document.getElementById('modal-outcome').classList.add('hidden');
+            generateStage(stageNum);
+            refreshHUD();
+            const scene = gameInstance?.scene?.getScene('JamPuzzleScene');
+            if (scene) {
+                scene.recalculateMetrics();
+                scene.drawBoardEnvironment();
+                scene.buildStageVisuals();
+                scene.applyFrontQueueEffects(false);
+            }
+            persistProgress('stage_restart');
+        }
+
+        function printDebugSnapshot() {
+            const debugApi = window.BusFeverDebug;
+            if (!debugApi) return;
+            debugApi.printSnapshot();
+            showToast('현재 상태 로그를 콘솔에 출력했습니다.');
+        }
+
+        async function showRankModal() {
+            if (!HubPlatform.isReady) return;
+            const mask = document.getElementById('modal-rank');
+            const list = document.getElementById('rank-list');
+            list.innerHTML = '<li class="rank-row">순위를 불러오는 중...</li>';
+            mask.classList.remove('hidden');
+
+            const rows = await HubPlatform.getTopBoard();
+            if (!rows || !Array.isArray(rows) || rows.length === 0) {
+                list.innerHTML = '<li class="rank-row">등록된 순위가 없습니다.</li>';
+                return;
+            }
+
+            list.innerHTML = rows.map((item, idx) => {
+                const stg = Math.floor(item.value / 1000000);
+                const scr = item.value % 1000000;
+                const uname = item.username || '플레이어';
+                return `
+              <li class="rank-row">
+                <span class="rank-no">${idx + 1}위</span>
+                <span class="rank-user">${uname}</span>
+                <span class="rank-score">STG ${stg} · ${scr.toLocaleString()}점</span>
+              </li>
+            `;
+            }).join('');
+        }
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            await AppPlatform.initialize();
+            const localSaved = await AppPlatform.loadGame();
+            const cloudSaved = await AppPlatform.loadCloudSave();
+            if (AppPlatform.saveWriteBlocked) {
+                openOutcomeModal(false, '게임 업데이트가 필요해요', '더 최신 버전에서 저장한 진행 데이터가 있습니다. 게임을 업데이트한 뒤 다시 실행해 주세요.');
+                document.querySelectorAll('button').forEach(button => { button.disabled = true; });
+                return;
+            }
+            const saved = selectPreferredSave(localSaved, cloudSaved);
+            if (saved && typeof saved === 'object') {
+                SimState.stage = saved.stage || 1;
+                SimState.score = saved.score || 0;
+                SimState.shufflesLeft = saved.shufflesLeft ?? 2;
+                SimState.vipLeft = saved.vipLeft ?? 1;
+                hydrateMetaState(SimState, saved);
+                AppPlatform.logEvent('save_loaded', { source: saved.__source || 'local', stage: SimState.stage, updatedAt: saved.updatedAt || 0, schemaVersion: saved.schemaVersion || 0 });
+            } else {
+                hydrateMetaState(SimState);
+            }
+
+            try {
+                levelSeedData = await loadStageSeed('../data/levels_seed.json');
+            } catch (error) {
+                console.error('Stage data load failed.', error);
+                openOutcomeModal(false, '레벨을 불러오지 못했어요', '잠시 후 다시 시도해 주세요.');
+                const retry = document.getElementById('btn-outcome-action');
+                retry.textContent = '다시 불러오기';
+                retry.addEventListener('click', () => window.location.reload(), { once: true });
+                for (const id of ['btn-reset', 'btn-shuffle', 'btn-vip', 'btn-reward', 'btn-shop', 'btn-hint']) document.getElementById(id).disabled = true;
+                return;
+            }
+            const stageIds = levelSeedData.stages.map(stage => stage.stage);
+            if (!stageIds.includes(SimState.stage)) SimState.stage = Math.min(...stageIds.filter(stage => stage >= SimState.stage).concat(Math.max(...stageIds)));
+            generateStage(SimState.stage);
+            const resumed = restoreRound(SimState, saved?.round, levelSeedData);
+            if (saved?.round && !resumed.restored) showToast('레벨 데이터가 변경되었거나 저장이 손상되어 현재 레벨을 새로 시작합니다.');
+            else if (resumed.restored) showToast('진행 중이던 퍼즐을 이어서 시작합니다.');
+
+            // Consent/ATT/SDK setup starts after the playable UI is installed below.
+            // Network failures must not prevent offline puzzle startup.
+
+            const session = registerSessionStart(SimState);
+            AppPlatform.logEvent('session_start', {
+                placement: AD_PLACEMENTS.sessionStart,
+                sessionCount: session.sessionCount,
+                stage: SimState.stage,
+                schemaVersion: SAVE_SCHEMA_VERSION,
+                trackingAuthorizationStatus: SimState.trackingAuthorizationStatus
+            });
+
+            await persistProgress('startup_sync');
+
+            const hubOk = await HubPlatform.initialize();
+            if (hubOk) {
+                const hubSaved = await HubPlatform.loadGame();
+                if (hubSaved && typeof hubSaved === 'object') {
+                    const hubStage = hubSaved.stage;
+                    if (Number.isInteger(hubStage) && hubStage > SimState.stage && stageIds.includes(hubStage)) generateStage(hubStage);
+                    SimState.score = Math.max(SimState.score, hubSaved.score || 0);
+                }
+            }
+
+            await persistProgress();
+
+            refreshHUD();
+
+            // 3. Phaser 3 게임 인스턴스 초기화
+            gameInstance = new Phaser.Game({
+                type: Phaser.AUTO,
+                resolution: Math.min(window.devicePixelRatio || 1, 2),
+                antialias: true,
+                parent: 'phaser-root',
+                backgroundColor: '#c8e6b7',
+                scale: {
+                    mode: Phaser.Scale.RESIZE,
+                    autoCenter: Phaser.Scale.CENTER_BOTH,
+                    width: document.getElementById('phaser-root').clientWidth,
+                    height: document.getElementById('phaser-root').clientHeight
+                },
+                scene: [JamPuzzleScene]
+            });
+
+            installStateDebug(window, SimState, () => gameInstance?.scene?.getScene('JamPuzzleScene'));
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') persistProgress('app_background');
+            });
+            window.addEventListener('pagehide', () => { persistProgress('app_pagehide'); });
+            // WKWebView awaits this Promise while its native background task is active.
+            window.BusFeverLifecycle = Object.freeze({
+                checkpoint: () => {
+                    nativeAppInactive = true;
+                    updateGameplayPause();
+                    return persistProgress('native_background');
+                },
+                resume: () => {
+                    nativeAppInactive = false;
+                    updateGameplayPause();
+                    schedulePurchaseRefresh();
+                    refreshCloudButton();
+                }
+            });
+
+            // 4. DOM 컨트롤 바인딩
+            for (const type of ['click', 'pointerdown', 'keydown']) {
+                document.addEventListener(type, event => {
+                    if (!nativeAppInactive && !purchaseInProgress && !AppPlatform.fullscreenBusy) return;
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                }, true);
+            }
+            document.getElementById('btn-hint').addEventListener('click', handleHint);
+            document.getElementById('btn-reset').addEventListener('click', () => {
+                AudioSynth.tap();
+                bootStage(SimState.stage);
+            });
+
+            document.getElementById('btn-outcome-action').addEventListener('click', () => {
+                AudioSynth.tap();
+                pendingOutcomeAction?.();
+            });
+
+            document.getElementById('btn-outcome-secondary').addEventListener('click', async () => {
+                AudioSynth.tap();
+                if (pendingOutcomeSecondaryAction) {
+                    await pendingOutcomeSecondaryAction();
+                }
+            });
+
+            document.getElementById('btn-shuffle').addEventListener('click', () => {
+                const scene = gameInstance?.scene?.getScene('JamPuzzleScene');
+                if (scene) scene.triggerShuffle();
+            });
+
+            document.getElementById('btn-vip').addEventListener('click', () => {
+                const scene = gameInstance?.scene?.getScene('JamPuzzleScene');
+                if (scene) scene.triggerVip();
+            });
+
+            document.getElementById('btn-reward').addEventListener('click', async () => {
+                AudioSynth.tap();
+                await handleRewardedBoost();
+            });
+
+            document.getElementById('btn-shop').addEventListener('click', () => {
+                AudioSynth.tap();
+                openShopModal();
+            });
+
+            document.getElementById('btn-rank').addEventListener('click', () => {
+                AudioSynth.tap();
+                showRankModal();
+            });
+
+            document.getElementById('btn-rank-close').addEventListener('click', () => {
+                AudioSynth.tap();
+                document.getElementById('modal-rank').classList.add('hidden');
+            });
+
+            document.getElementById('btn-shop-close').addEventListener('click', () => {
+                AudioSynth.tap();
+                closeShopModal();
+            });
+
+            document.getElementById('btn-ad-privacy').addEventListener('click', async event => {
+                const button = event.currentTarget;
+                button.disabled = true;
+                try {
+                    const result = await AppPlatform.showPrivacyOptions();
+                    if (result.presented) {
+                        // Discarded creatives are replaced only after consent is checked again.
+                        await AppPlatform.configureAds();
+                        showToast('광고 개인정보 선택을 반영했습니다.');
+                    } else {
+                        showToast(result.reason === 'consent_refreshed' ? '광고 개인정보 설정을 확인했습니다.' : '지금은 설정을 열 수 없습니다. 잠시 후 다시 시도해 주세요.');
+                    }
+                    await observeTrackingAuthorization();
+                    await persistProgress('ad_privacy_updated');
+                } finally {
+                    await refreshAdPrivacyButton();
+                    button.disabled = false;
+                }
+            });
+
+            document.getElementById('btn-cloud-save').addEventListener('click', async () => {
+                if (purchaseInProgress || rewardedActions.busy || AppPlatform.fullscreenBusy) return;
+                setPurchaseBusy(true);
+                let reload = false;
+                try {
+                    if (!(await persistProgress('before_cloud_selection')).persisted) throw new Error('cloud_checkpoint_failed');
+                    const result = await AppPlatform.manageCloudSave();
+                    reload = result.requiresReload === true;
+                    if (reload) { window.location.reload(); return; }
+                    const messages = { signed_out: '설정에서 iCloud에 로그인한 뒤 다시 시도해 주세요.',
+                        quota: '백업 용량 또는 기기 수 한도에 도달했습니다. 기존 진행은 이 기기에 유지됩니다.',
+                        conflict: '진행이 변경되었습니다. 다시 열어 선택해 주세요.',
+                        invalid_data: '백업을 읽지 못했습니다. 기존 진행은 이 기기에 유지됩니다.',
+                        not_ready: '게임을 잠시 플레이한 뒤 다시 시도해 주세요.' };
+                    if (result.reason !== 'cancelled') showToast(messages[result.reason] || 'iCloud 연결을 확인하고 다시 시도해 주세요.');
+                } catch { showToast('현재 진행을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.'); }
+                finally {
+                    if (!reload) { setPurchaseBusy(false); await refreshCloudButton(); }
+                }
+            });
+
+            document.getElementById('btn-colorblind').addEventListener('click', async () => {
+                SimState.colorBlind = !SimState.colorBlind;
+                const scene = gameInstance?.scene?.getScene('JamPuzzleScene');
+                if (scene) {
+                    SimState.vehicles.forEach(vehicle => {
+                        const node = scene.vehNodes.get(vehicle.id);
+                        if (node) scene.paintVehicle(node, vehicle);
+                    });
+                    scene.renderPassengerQueue();
+                }
+                refreshHUD();
+                await persistProgress('color_symbols_changed');
+            });
+
+            document.getElementById('btn-restore-purchases').addEventListener('click', async () => {
+                AudioSynth.tap();
+                try {
+                    const result = await reconcilePurchases({ userInitiated: true });
+                    showToast(result.unavailable ? '구매 복원은 iOS 앱에서 사용할 수 있습니다.' : !result.verified ? '잠시 후 다시 시도해 주세요.' : result.productIds.length ? '구매 내역을 반영했습니다.' : '복원할 구매 내역이 없습니다.');
+                } catch { showToast('구매 복원을 완료하지 못했습니다. 잠시 후 다시 시도해 주세요.'); }
+            });
+
+            window.addEventListener('keydown', event => {
+                if (event.repeat) return;
+                if (event.shiftKey && event.key.toLowerCase() === 'l') {
+                    printDebugSnapshot();
+                }
+            });
+            refreshAdPrivacyButton();
+            refreshCloudButton();
+            window.addEventListener('busfever-cloud-changed', refreshCloudButton);
+            commerceReady = true;
+            window.addEventListener('busfever-purchases-changed', schedulePurchaseRefresh);
+            schedulePurchaseRefresh();
+            AppPlatform.refreshProducts();
+            AppPlatform.configureAds().then(async () => {
+                await observeTrackingAuthorization();
+                await refreshAdPrivacyButton();
+                await persistProgress('ad_consent_initialized');
+            });
+        });
+    </script>
+</body>
+</html>

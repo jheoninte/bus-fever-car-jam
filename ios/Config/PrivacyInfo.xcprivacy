@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Conditional advertising tracking after consent + ATT. SDK collection is declared
+         by the two bundled SDK manifests; review the merged Xcode privacy report before release.
+         This host defines no tracking endpoint of its own. -->
+    <key>NSPrivacyTracking</key><true/>
+    <key>NSPrivacyCollectedDataTypes</key><array/>
+    <key>NSPrivacyAccessedAPITypes</key><array/>
+</dict>
+</plist>
